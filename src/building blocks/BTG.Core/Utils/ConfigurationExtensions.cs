@@ -1,12 +1,12 @@
-﻿//using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
-//namespace BTG.Core.Utils
-//{
-//    public static class ConfigurationExtensions
-//    {
-//        public static string GetMessageQueueConnection(this IConfiguration configuration, string name)
-//        {
-//            return configuration?.GetSection("MessageQueueConnection")?[name];
-//        }
-//    }
-//}
+namespace BTG.Core.Utils
+{
+    public static class ConfigurationExtensions
+    {
+        public static string GetMessageQueueConnection(this IConfiguration configuration, string name)
+        {
+            return configuration?.GetSection("MessageQueueConnection")?[name];
+        }
+    }
+}

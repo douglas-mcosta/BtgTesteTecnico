@@ -1,0 +1,6 @@
+@BTG.Ecommerce.API_HostAddress = http://localhost:5110
+
+GET {{BTG.Ecommerce.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

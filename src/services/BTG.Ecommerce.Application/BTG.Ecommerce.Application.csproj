@@ -7,9 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.10.0" />
-    <PackageReference Include="MediatR" Version="12.4.1" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
+    <Folder Include="Queries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\building blocks\BTG.Core\BTG.Core.csproj" />
+    <ProjectReference Include="..\BTG.Ecommerce.Domain\BTG.Ecommerce.Domain.csproj" />
   </ItemGroup>
 
 </Project>

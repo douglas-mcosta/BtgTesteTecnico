@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+
+    rabbitmq:
+        image: rabbitmq:3.8-management
+        container_name: rabbit-btg
+        ports:
+        - 5672:5672
+        - 15672:15672
+       
+
+    sql-server:
+        image: douglas/bgt-sql-server:latest
+        container_name: bgt-sql-server
+        build: 
+            context: ../sql
+            dockerfile: ./Dockerfile
+        ports:
+          - "1433:1433"
+        environment:
+            SA_PASSWORD: "MeuDB@123"
+            ACCEPT_EULA: "Y"     
+
+volumes:
+    dpkeys:     

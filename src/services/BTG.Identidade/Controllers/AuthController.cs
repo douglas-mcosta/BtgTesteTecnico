@@ -1,7 +1,10 @@
-﻿using BTG.Identidade.API.Extensions;
+﻿using BTG.Core.Messages.Integration;
+using BTG.Identidade.API.Extensions;
 using BTG.Identidade.API.Models;
 using BTG.Identidade.API.Services.NSE.Identidade.API.Services;
+using BTG.MessageBus;
 using BTG.WebAPI.Core.Controllers;
+using BTG.WebAPI.Core.Identidate;
 using BTG.WebAPI.Core.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,19 +19,19 @@ namespace BTG.Identidade.API.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly TokenSettings _appSettings;
         private readonly AuthenticationService _authenticationService;
-        //private readonly IMessageBus _bus;
+        private readonly IMessageBus _bus;
         private readonly IAspNetUser _aspNetUser;
         public AuthController(SignInManager<IdentityUser> signInManager,
                               UserManager<IdentityUser> userManager,
                               IOptions<TokenSettings> appSettings,
-                              //IMessageBus bus,
+                              IMessageBus bus,
                               IAspNetUser aspNetUser,
                               AuthenticationService authenticationService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _appSettings = appSettings.Value;
-            //_bus = bus;
+            _bus = bus;
             _aspNetUser = aspNetUser;
             _authenticationService = authenticationService;
         }
@@ -49,13 +52,13 @@ namespace BTG.Identidade.API.Controllers
 
             if (result.Succeeded)
             {
-                //var clienteResult = await RegistrarCliete(model);
+                var clienteResult = await RegistrarCliente(model);
 
-                //if (!clienteResult.ValidationResult.IsValid)
-                //{
-                //    await _authenticationService.UserManager.DeleteAsync(user);
-                //    return CustomResponse(clienteResult.ValidationResult);
-                //}
+                if (!clienteResult.ValidationResult.IsValid)
+                {
+                    await _authenticationService.UserManager.DeleteAsync(user);
+                    return CustomResponse(clienteResult.ValidationResult);
+                }
 
                 return CustomResponse(await _authenticationService.GerarJwt(model.Email));
             }
@@ -66,7 +69,7 @@ namespace BTG.Identidade.API.Controllers
             return CustomResponse();
         }
 
-        [HttpPost("auth")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(UsuarioLoginViewModel model)
         {
             if (!ModelState.IsValid)
@@ -89,21 +92,21 @@ namespace BTG.Identidade.API.Controllers
             return CustomResponse();
         }
 
-        //private async Task<ResponseMessage> RegistrarCliete(RegisterUserViewModel model)
-        //{
-        //    var usuario = await _userManager.FindByEmailAsync(model.Email);
-        //    var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(Guid.Parse(usuario.Id), model.Name, model.Email, model.Cpf);
+        private async Task<ResponseMessage> RegistrarCliente(RegistroUsuarioViewModel model)
+        {
+            var usuario = await _userManager.FindByEmailAsync(model.Email);
+            var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(Guid.Parse(usuario.Id), model.Nome, model.Email, model.Cpf);
 
-        //    try
-        //    {
-        //        return await _bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
-        //    }
-        //    catch
-        //    {
-        //        await _userManager.DeleteAsync(usuario);
-        //        throw;
-        //    }
+            try
+            {
+                return await _bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
+            }
+            catch
+            {
+                await _userManager.DeleteAsync(usuario);
+                throw;
+            }
 
-        //}
+        }
     }
 }

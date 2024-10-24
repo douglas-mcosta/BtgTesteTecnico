@@ -4,25 +4,17 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>f19c1f89-d67c-4d56-838e-10ea31ebed32</UserSecretsId>
+    <UserSecretsId>c3f92252-a9d7-42fe-831e-f0beedfed94d</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.10" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.10" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.10">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
@@ -31,6 +23,9 @@
     <ProjectReference Include="..\..\building blocks\BTG.Core\BTG.Core.csproj" />
     <ProjectReference Include="..\..\building blocks\BTG.MessageBus\BTG.MessageBus.csproj" />
     <ProjectReference Include="..\..\building blocks\BTG.WebAPI.Core\BTG.WebAPI.Core.csproj" />
+    <ProjectReference Include="..\BTG.Ecommerce.Application\BTG.Ecommerce.Application.csproj" />
+    <ProjectReference Include="..\BTG.Ecommerce.Domain\BTG.Ecommerce.Domain.csproj" />
+    <ProjectReference Include="..\BTG.Ecommerce.Infra\BTG.Ecommerce.Infra.csproj" />
   </ItemGroup>
 
 </Project>

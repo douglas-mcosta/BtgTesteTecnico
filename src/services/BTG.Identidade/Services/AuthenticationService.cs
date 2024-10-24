@@ -1,6 +1,7 @@
 ﻿using BTG.Identidade.API.Data;
 using BTG.Identidade.API.Extensions;
 using BTG.Identidade.API.Models;
+using BTG.WebAPI.Core.Identidate;
 using BTG.WebAPI.Core.User;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
