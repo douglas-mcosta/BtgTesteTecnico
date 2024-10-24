@@ -21,7 +21,8 @@ namespace BTG.Ecommerce.Domain.Models
         public Email Email { get; private set; }
         public Cpf Cpf { get; private set; }
         public DateTime DataCadastro { get; private set; }
-        public DateTime? Cpf { get; private set; }
+        public DateTime? DataAtualizacao { get; private set; }
 
+        public IEnumerable<Pedido> Pedidos { get; private set; }
     }
 }

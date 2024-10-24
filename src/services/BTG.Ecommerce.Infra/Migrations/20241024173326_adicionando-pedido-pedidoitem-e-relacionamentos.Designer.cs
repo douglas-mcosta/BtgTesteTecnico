@@ -4,6 +4,7 @@ using BTG.Ecommerce.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTG.Clientes.Infra.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    partial class ClienteContextModelSnapshot : ModelSnapshot
+    [Migration("20241024173326_adicionando-pedido-pedidoitem-e-relacionamentos")]
+    partial class adicionandopedidopedidoitemerelacionamentos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

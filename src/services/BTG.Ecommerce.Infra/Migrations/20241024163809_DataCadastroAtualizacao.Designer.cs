@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTG.Clientes.Infra.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    [Migration("20241024030630_Initial")]
-    partial class Initial
+    [Migration("20241024163809_DataCadastroAtualizacao")]
+    partial class DataCadastroAtualizacao
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,11 +25,17 @@ namespace BTG.Clientes.Infra.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BTG.Clientes.Domain.Models.Cliente", b =>
+            modelBuilder.Entity("BTG.Ecommerce.Domain.Models.Cliente", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -41,7 +47,7 @@ namespace BTG.Clientes.Infra.Migrations
                     b.ToTable("Clientes", (string)null);
                 });
 
-            modelBuilder.Entity("BTG.Clientes.Domain.Models.Cliente", b =>
+            modelBuilder.Entity("BTG.Ecommerce.Domain.Models.Cliente", b =>
                 {
                     b.OwnsOne("BTG.Core.DomainObjects.Cpf", "Cpf", b1 =>
                         {

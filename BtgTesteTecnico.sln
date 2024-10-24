@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identidade", "Identidade", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTG.Identidade.API", "src\services\BTG.Identidade\BTG.Identidade.API.csproj", "{0A607706-426D-446D-8A16-B5F98B0D6DAD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Produtos", "Produtos", "{C9DFDFE6-E867-4E9A-8DE1-66784E8238C3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Relatorios", "Relatorios", "{C9DFDFE6-E867-4E9A-8DE1-66784E8238C3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{883438BC-3B8E-4B1C-A009-57D1E8527214}"
 EndProject
@@ -37,7 +37,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTG.Ecommerce.API", "src\se
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MessageBus", "MessageBus", "{FC2D71F0-19D7-44CB-9551-339405DB91EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BTG.MessageBus", "src\building blocks\BTG.MessageBus\BTG.MessageBus.csproj", "{C5364D0D-4BCE-4F7C-9271-9262E1B4C53A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BTG.MessageBus", "src\building blocks\BTG.MessageBus\BTG.MessageBus.csproj", "{C5364D0D-4BCE-4F7C-9271-9262E1B4C53A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

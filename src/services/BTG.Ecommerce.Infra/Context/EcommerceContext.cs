@@ -8,10 +8,10 @@ using System.ComponentModel.DataAnnotations;
 namespace BTG.Ecommerce.Infra.Context
 {
 
-    public class ClienteContext : DbContext, IUnitOfWork
+    public class EcommerceContext : DbContext, IUnitOfWork
     {
         private IMediatorHandler _mediatorHandler;
-        public ClienteContext(DbContextOptions<ClienteContext> options, IMediatorHandler mediatorHandler) : base(options)
+        public EcommerceContext(DbContextOptions<EcommerceContext> options, IMediatorHandler mediatorHandler) : base(options)
         {
             _mediatorHandler = mediatorHandler;
         }
@@ -31,7 +31,9 @@ namespace BTG.Ecommerce.Infra.Context
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
                 relationship.DeleteBehavior = DeleteBehavior.ClientSetNull;
 
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ClienteContext).Assembly);
+            modelBuilder.HasSequence<int>("SequenciaCodigoPedido").StartsAt(1000).IncrementsBy(1);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(EcommerceContext).Assembly);
             base.OnModelCreating(modelBuilder);
         }
 
@@ -44,7 +46,21 @@ namespace BTG.Ecommerce.Infra.Context
                     entry.Property("DataCadastro").CurrentValue = DateTime.Now;
 
                 if (entry.State == EntityState.Modified)
+                {
                     entry.Property("DataCadastro").IsModified = false;
+                }
+            }
+
+            foreach (var entry in ChangeTracker.Entries()
+               .Where(entry => entry.Entity.GetType().GetProperty("DataAtualizacao") != null))
+            {
+                if (entry.State == EntityState.Modified)
+                    entry.Property("DataAtualizacao").CurrentValue = DateTime.Now;
+
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Property("DataAtualizacao").IsModified = false;
+                }
             }
 
             var sucesso = await base.SaveChangesAsync() > 0;

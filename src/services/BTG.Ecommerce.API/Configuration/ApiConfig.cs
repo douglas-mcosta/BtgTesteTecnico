@@ -10,7 +10,7 @@ namespace BTG.Ecommerce.API.Configuration
 
         public static void AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<ClienteContext>(options =>
+            services.AddDbContext<EcommerceContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();

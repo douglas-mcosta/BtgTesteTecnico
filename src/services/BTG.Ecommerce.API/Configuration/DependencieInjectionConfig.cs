@@ -28,7 +28,7 @@ namespace BTG.Ecommerce.API.Configuration
             //Event
             services.AddScoped<INotificationHandler<ClienteRegistradoEvent>, ClienteEventHandler>();
             //Data
-            services.AddDbContext<ClienteContext>();
+            services.AddDbContext<EcommerceContext>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
 
             return services;

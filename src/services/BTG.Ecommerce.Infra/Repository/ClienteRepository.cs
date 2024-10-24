@@ -8,9 +8,9 @@ namespace BTG.Ecommerce.Infra.Repository
 {
     public class ClienteRepository : IClienteRepository
     {
-        private readonly ClienteContext _clienteContext;
+        private readonly EcommerceContext _clienteContext;
 
-        public ClienteRepository(ClienteContext clienteContext)
+        public ClienteRepository(EcommerceContext clienteContext)
         {
             _clienteContext = clienteContext;
         }
