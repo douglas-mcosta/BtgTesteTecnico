@@ -1,6 +1,6 @@
-﻿namespace BTG.Ecommerce.Application.DTO
+﻿namespace BTG.Ecommerce.Application.ViewModel
 {
-    public class EnderecoDTO
+    public class EnderecoViewModel
     {
         public string Logradouro { get; set; }
         public string Numero { get; set; }

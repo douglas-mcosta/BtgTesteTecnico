@@ -12,7 +12,6 @@ export class TokenInterceptorService implements HttpInterceptor {
     constructor(private authService: AuthService, private router: Router, private toast: ToastrService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        console.log("teste")
         return this.injetarToken(request, next).pipe(catchError(error => {
 
             if (error instanceof HttpErrorResponse) {
@@ -22,7 +21,7 @@ export class TokenInterceptorService implements HttpInterceptor {
                     let toast = this.toast.warning("Sessão expirada", "Atenção!", { timeOut: 1000 });
                     if (toast) {
                         toast.onHidden
-                            .subscribe(() => { this.router.navigate(['/account/login']) })
+                            .subscribe(() => { this.router.navigate(['/conta/login']) })
                     }
                 }
 

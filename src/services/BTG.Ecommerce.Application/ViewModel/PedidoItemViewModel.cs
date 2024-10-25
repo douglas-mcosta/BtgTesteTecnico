@@ -1,9 +1,9 @@
 ﻿using BTG.Ecommerce.Domain.Models;
 using System;
 
-namespace BTG.Ecommerce.Application.DTO
+namespace BTG.Ecommerce.Application.ViewModel
 {
-    public class PedidoItemDTO
+    public class PedidoItemViewModel
     {
         public Guid ProdutoId { get; set; }
         public Guid PedidoId { get; set; }
@@ -12,7 +12,7 @@ namespace BTG.Ecommerce.Application.DTO
         public string Imagem { get; set; }
         public int Quantidade { get; set; }
 
-        public static PedidoItem ParaPedidoItem(PedidoItemDTO pedidoItemDto)
+        public static PedidoItem ParaPedidoItem(PedidoItemViewModel pedidoItemDto)
         {
             var pedidoItem = new PedidoItem(
                 pedidoItemDto.PedidoId,

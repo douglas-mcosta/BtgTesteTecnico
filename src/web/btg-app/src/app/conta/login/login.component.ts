@@ -8,6 +8,7 @@ import { ContaService } from '../services/conta.service';
 import { FormBaseComponent } from 'src/app/base-components/form-base.component';
 import { UsuarioViewModel } from '../models/usuario.vm';
 import { CustomValidators } from 'ng2-validation';
+import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 
 
 @Component({
@@ -28,7 +29,8 @@ export class LoginComponent extends FormBaseComponent implements OnInit {
     private contaService: ContaService,
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private sp: NgxSpinnerService) {
 
     super();
 
@@ -61,6 +63,7 @@ export class LoginComponent extends FormBaseComponent implements OnInit {
   }
 
   login() {
+    this.sp.show();
     if (this.loginForm.dirty && this.loginForm.valid) {
       this.usuario = Object.assign({}, this.usuario, this.loginForm.value);
 
@@ -75,10 +78,10 @@ export class LoginComponent extends FormBaseComponent implements OnInit {
   processarSucesso(response: any) {
     this.loginForm.reset();
     this.errors = [];
-
+    this.sp.hide();
     this.contaService.tokenStorage.salvarDadosLocaisUsuario(response);
 
-    let toast = this.toastr.success('Login realizado com Sucesso!', 'Bem vindo!!!',{timeOut:500});
+    let toast = this.toastr.success('Login realizado com Sucesso!', 'Bem vindo!!!', { timeOut: 500 });
 
     if (toast) {
       toast.onHidden.subscribe(() => {
@@ -90,7 +93,7 @@ export class LoginComponent extends FormBaseComponent implements OnInit {
   }
 
   processarFalha(fail: any) {
-    console.log(fail);
+    this.sp.hide();
     this.toastr.error('Ocorreu um erro!', 'Opa :(');
     this.errors = fail.error.errors.Mensagens;
   }

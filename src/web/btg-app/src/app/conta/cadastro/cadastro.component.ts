@@ -11,6 +11,7 @@ import { UsuarioViewModel } from '../models/usuario.vm';
 import { CustomValidators } from 'ng2-validation';
 import { concat } from 'rxjs';
 import { cpf } from 'ng-brazil';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-cadastro',
@@ -27,7 +28,8 @@ export class CadastroComponent extends FormBaseComponent implements AfterViewIni
   constructor(private fb: FormBuilder,
     private contaService: ContaService,
     private router: Router,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private sp: NgxSpinnerService) {
 
     super();
     let senha = new FormControl('', [Validators.required, CustomValidators.rangeLength([6, 15])]);
@@ -75,6 +77,7 @@ export class CadastroComponent extends FormBaseComponent implements AfterViewIni
   }
 
   adicionarConta() {
+    this.sp.show();
     if (this.cadastroForm.dirty && this.cadastroForm.valid) {
       this.usuario = Object.assign({}, this.usuario, this.cadastroForm.value);
 
@@ -93,7 +96,7 @@ export class CadastroComponent extends FormBaseComponent implements AfterViewIni
     this.errors = [];
 
     this.contaService.tokenStorage.salvarDadosLocaisUsuario(response);
-
+    this.sp.hide();
     let toast = this.toastr.success('Registro realizado com Sucesso!', 'Bem vindo!!!');
     if (toast) {
       toast.onHidden.subscribe(() => {
@@ -103,9 +106,9 @@ export class CadastroComponent extends FormBaseComponent implements AfterViewIni
   }
 
   processarFalha(fail: any) {
+    this.sp.hide();
     this.errors = [];
     this.errors = fail.error.errors.Mensagens;
-
     this.toastr.error('Ocorreu um erro!', 'Opa :(');
   }
 

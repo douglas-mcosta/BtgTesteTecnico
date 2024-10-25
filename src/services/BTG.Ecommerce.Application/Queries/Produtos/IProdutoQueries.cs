@@ -1,11 +1,11 @@
 ﻿using BTG.Core.DomainObjects;
-using BTG.Ecommerce.Application.DTO;
+using BTG.Ecommerce.Application.ViewModel;
 
 namespace BTG.Ecommerce.Application.Queries.Produtos
 {
     public interface IProdutoQueries
     {
-        Task<PagedResult<ProdutoDTO>> ObterTodosAsync(int pageSize, int pageIndex, string nome = null);
-        Task<ProdutoDTO> ObterPorIdAsync(Guid id);
+        Task<PagedResult<ProdutoViewModel>> ObterTodosAsync(int pageSize, int pageIndex, string nome = null);
+        Task<ProdutoViewModel> ObterPorIdAsync(Guid id);
     }
 }

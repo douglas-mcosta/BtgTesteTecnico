@@ -4,11 +4,12 @@ import { ProdutoAppComponent } from './produto.app.component';
 import { RouterModule } from '@angular/router';
 import { ProdutoRoutingModule } from './produto.routing';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { CustomFormsModule } from 'ng2-validation';
 import { SharedModule } from '../shared/shared.module';
 import { CatalagoComponent } from './catalago/catalago.component';
 import { ProdutoService } from './services/produto.service';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -17,12 +18,15 @@ import { ProdutoService } from './services/produto.service';
     ProdutoRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
     CustomFormsModule,
-    SharedModule
+    SharedModule,
+    NgxSpinnerModule,
+    NgbModule
   ],
-  declarations: [ProdutoAppComponent,CatalagoComponent],
-  providers:[
+  declarations: [
+    ProdutoAppComponent,
+    CatalagoComponent],
+  providers: [
     ProdutoService
   ]
 })

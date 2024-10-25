@@ -14,9 +14,13 @@ namespace BTG.Ecommerce.Domain.Models
         public Pedido Pedido { get; private set; }
         public Produto Produto { get; private set; }
 
-        public PedidoItem(Guid pedidoId, Guid produtoId, string produtoNome, int quantidade, decimal valorUnitario, string produtoImagem)
+        public PedidoItem(Guid pedidoId, Guid produtoId, string produtoNome, int quantidade, decimal valorUnitario, string produtoImagem) : this(produtoId, produtoNome, quantidade, valorUnitario, produtoImagem)
         {
             PedidoId = pedidoId;
+        }
+
+        public PedidoItem(Guid produtoId, string produtoNome, int quantidade, decimal valorUnitario, string produtoImagem) : this()
+        {
             ProdutoId = produtoId;
             ProdutoNome = produtoNome;
             Quantidade = quantidade;
@@ -27,5 +31,6 @@ namespace BTG.Ecommerce.Domain.Models
         private PedidoItem() { }
 
         internal decimal CalcularValor() => Quantidade * ValorUnitario;
+        internal decimal SomarQuantidade(int quantidade) => Quantidade += quantidade;
     }
 }

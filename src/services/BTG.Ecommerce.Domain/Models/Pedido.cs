@@ -1,18 +1,20 @@
 ﻿using BTG.Core.DomainObjects;
 using BTG.Core.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BTG.Ecommerce.Domain.Models
 {
     public class Pedido : Entity
     {
-        public Pedido(Guid clienteId, List<PedidoItem> pedidoItems)
+        public Pedido()
+        {
+            PedidoItems = new List<PedidoItem>();
+        }
+        public Pedido(Guid clienteId) : this()
         {
             ClienteId = clienteId;
-            _pedidoItems = pedidoItems;
 
         }
-
-        private Pedido() { }
 
         public int Codigo { get; private set; }
         public Guid ClienteId { get; private set; }
@@ -21,9 +23,13 @@ namespace BTG.Ecommerce.Domain.Models
         public PedidoStatus PedidoStatus { get; private set; }
         public Cliente Cliente { get; private set; }
 
-        private readonly List<PedidoItem> _pedidoItems;
-        public IReadOnlyCollection<PedidoItem> PedidoItems => _pedidoItems;
-        public Endereco Endereco { get; private set; }
+        public List<PedidoItem> PedidoItems { get; private set; }
+        public Endereco? Endereco { get; private set; }
+        [NotMapped]
+        public Endereco? ItemNovo { get; private set; }
+
+
+        public bool PedidoEstaAberto() => PedidoStatus.Equals(PedidoStatus.Aberto);
 
         public void RealizarPedido() =>
             PedidoStatus = PedidoStatus.AguardandoPagamento;
@@ -41,5 +47,33 @@ namespace BTG.Ecommerce.Domain.Models
 
         public void PagamentoRecusado() =>
             PedidoStatus = PedidoStatus.PagamentoRecusado;
+
+        public void AddItemPedido(PedidoItem novoItem)
+        {
+            if (PedidoItems is null) PedidoItems = new List<PedidoItem>();
+
+            if (ExisteItem(novoItem))
+            {
+                var item = ObterItem(novoItem);
+                item.SomarQuantidade(novoItem.Quantidade);
+                item.CalcularValor();
+                CalcularValorPedido();
+                return;
+            }
+
+            PedidoItems.Add(novoItem);
+            CalcularValorPedido();
+        }
+
+        public bool ExisteItem(PedidoItem item)
+        {
+            return PedidoItems.Any(x => x.ProdutoId == item.ProdutoId);
+        }
+
+        public PedidoItem ObterItem(PedidoItem item)
+        {
+            return PedidoItems.FirstOrDefault(x => x.ProdutoId == item.ProdutoId);
+        }
+
     }
 }

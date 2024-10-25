@@ -1,9 +1,12 @@
 ﻿using BTG.Core.Messages;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace BTG.Core.DomainObjects
 {
     public abstract class Entity
     {
+        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid Id { get; set; }
         protected Entity()
         {

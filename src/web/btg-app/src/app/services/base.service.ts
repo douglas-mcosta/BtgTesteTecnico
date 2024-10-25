@@ -18,15 +18,6 @@ export abstract class BaseService {
     };
   }
 
-  protected ObterAuthHeaderJson() {
-    return {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${this.tokenStorage.obterTokenUsuario()}`
-      })
-    };
-  }
-
   protected extractData(response: any) {
     return response || {};
   }
@@ -35,7 +26,6 @@ export abstract class BaseService {
     let customError: string[] = [];
     let customResponse = new BadRequestResult();
 
-    console.log(response)
     if (response instanceof HttpErrorResponse) {
 
       if (response.statusText === "Unknown Error") {

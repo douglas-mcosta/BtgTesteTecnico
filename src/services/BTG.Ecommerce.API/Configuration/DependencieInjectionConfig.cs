@@ -1,6 +1,8 @@
 ﻿using BTG.Core.Mediator;
 using BTG.Ecommerce.Application.Commands.Clientes;
+using BTG.Ecommerce.Application.Commands.Pedidos;
 using BTG.Ecommerce.Application.Events.Clientes;
+using BTG.Ecommerce.Application.Queries.Pedidos;
 using BTG.Ecommerce.Application.Queries.Produtos;
 using BTG.Ecommerce.Domain.Interfaces;
 using BTG.Ecommerce.Infra.Context;
@@ -25,17 +27,20 @@ namespace BTG.Ecommerce.API.Configuration
             //Application
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<IRequestHandler<RegistrarClienteCommand, ValidationResult>, ClienteCommandHandler>();
+            services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, ValidationResult>, PedidoCommandHandler>();
 
             //Event
             services.AddScoped<INotificationHandler<ClienteRegistradoEvent>, ClienteEventHandler>();
 
             //Queries
             services.AddScoped<IProdutoQueries, ProdutoQueries>();
+            services.AddScoped<IPedidoQueries, PedidoQueries>();
 
             //Data
             services.AddDbContext<EcommerceContext>();
             services.AddScoped<IClienteRepository, ClienteRepository>();
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
+            services.AddScoped<IPedidoRepository, PedidoRepository>();
 
             return services;
         }

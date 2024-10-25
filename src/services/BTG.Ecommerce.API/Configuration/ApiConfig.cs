@@ -42,13 +42,13 @@ namespace BTG.Ecommerce.API.Configuration
                 app.UseSwaggerUI();
             }
 
+            app.UseCors("Total");
             app.UseHttpsRedirection();
 
             app.UseJwtConfiguration();
 
             app.MapControllers();
 
-            app.UseCors("Total");
 
         }
     }

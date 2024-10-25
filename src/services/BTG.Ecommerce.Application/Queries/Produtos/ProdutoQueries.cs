@@ -1,5 +1,5 @@
 ﻿using BTG.Core.DomainObjects;
-using BTG.Ecommerce.Application.DTO;
+using BTG.Ecommerce.Application.ViewModel;
 using BTG.Ecommerce.Domain.Interfaces;
 using BTG.Ecommerce.Domain.Models;
 
@@ -14,7 +14,7 @@ namespace BTG.Ecommerce.Application.Queries.Produtos
             _produtoRepository = produtoRepository;
         }
 
-        public async Task<ProdutoDTO> ObterPorIdAsync(Guid id)
+        public async Task<ProdutoViewModel> ObterPorIdAsync(Guid id)
         {
             var domain = await _produtoRepository.ObterPorIdAsync(id);
 
@@ -22,27 +22,28 @@ namespace BTG.Ecommerce.Application.Queries.Produtos
             
         }
 
-        public async Task<PagedResult<ProdutoDTO>> ObterTodosAsync(int pageSize, int pageIndex, string nome = null)
+        public async Task<PagedResult<ProdutoViewModel>> ObterTodosAsync(int pageSize, int pageIndex, string nome = null)
         {
             var domain = await _produtoRepository.ObterTodosAsync(pageSize, pageIndex, nome);
 
-            return new PagedResult<ProdutoDTO> {
+            return new PagedResult<ProdutoViewModel> {
                PageIndex = pageIndex,
                PageSize = pageSize,
-               Query = domain.Query,
+               Nome = domain.Nome,
                TotalResults = domain.TotalResults,
                List = domain.List.Select(ParaProdutoDTO)
             };
         }
 
-        public static ProdutoDTO ParaProdutoDTO(Produto produto)
+        public static ProdutoViewModel ParaProdutoDTO(Produto produto)
         {
-            return new ProdutoDTO
+            return new ProdutoViewModel
             {
                 Nome = produto.Nome,
                 Descricao = produto.Descricao,
                 Ativo = produto.Ativo,
-                Valor = produto.Valor
+                Valor = produto.Valor,
+                Imagem = produto.Imagem 
             };
         }
 

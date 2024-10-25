@@ -4,6 +4,7 @@ using BTG.Ecommerce.Infra.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BTG.Clientes.Infra.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    partial class ClienteContextModelSnapshot : ModelSnapshot
+    [Migration("20241025161518_AjustePedidoEndereco")]
+    partial class AjustePedidoEndereco
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -157,7 +160,7 @@ namespace BTG.Clientes.Infra.Migrations
 
             modelBuilder.Entity("BTG.Ecommerce.Domain.Models.Cliente", b =>
                 {
-                    b.OwnsOne("BTG.Ecommerce.Domain.Models.Cliente.Cpf#BTG.Core.DomainObjects.Cpf", "Cpf", b1 =>
+                    b.OwnsOne("BTG.Core.DomainObjects.Cpf", "Cpf", b1 =>
                         {
                             b1.Property<Guid>("ClienteId")
                                 .HasColumnType("uniqueidentifier");
@@ -170,13 +173,13 @@ namespace BTG.Clientes.Infra.Migrations
 
                             b1.HasKey("ClienteId");
 
-                            b1.ToTable("Clientes", (string)null);
+                            b1.ToTable("Clientes");
 
                             b1.WithOwner()
                                 .HasForeignKey("ClienteId");
                         });
 
-                    b.OwnsOne("BTG.Ecommerce.Domain.Models.Cliente.Email#BTG.Core.DomainObjects.Email", "Email", b1 =>
+                    b.OwnsOne("BTG.Core.DomainObjects.Email", "Email", b1 =>
                         {
                             b1.Property<Guid>("ClienteId")
                                 .HasColumnType("uniqueidentifier");
@@ -189,7 +192,7 @@ namespace BTG.Clientes.Infra.Migrations
 
                             b1.HasKey("ClienteId");
 
-                            b1.ToTable("Clientes", (string)null);
+                            b1.ToTable("Clientes");
 
                             b1.WithOwner()
                                 .HasForeignKey("ClienteId");
@@ -209,7 +212,7 @@ namespace BTG.Clientes.Infra.Migrations
                         .HasForeignKey("ClienteId")
                         .IsRequired();
 
-                    b.OwnsOne("BTG.Ecommerce.Domain.Models.Pedido.Endereco#BTG.Ecommerce.Domain.Models.Endereco", "Endereco", b1 =>
+                    b.OwnsOne("BTG.Ecommerce.Domain.Models.Endereco", "Endereco", b1 =>
                         {
                             b1.Property<Guid>("PedidoId")
                                 .HasColumnType("uniqueidentifier");
@@ -258,7 +261,7 @@ namespace BTG.Clientes.Infra.Migrations
 
                             b1.HasKey("PedidoId");
 
-                            b1.ToTable("Pedidos", (string)null);
+                            b1.ToTable("Pedidos");
 
                             b1.WithOwner()
                                 .HasForeignKey("PedidoId");

@@ -44,6 +44,7 @@ namespace BTG.Ecommerce.Infra.Repository
 
             return new PagedResult<Produto>
             {
+                Nome = nome,
                 PageIndex = pageIndex,
                 PageSize = pageSize,
                 TotalResults = totalResults,
