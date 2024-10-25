@@ -6,14 +6,12 @@ namespace BTG.Ecommerce.Domain.Models
     {
         public Produto() { }
        
-        public Produto(string nome, string descricao, bool ativo, decimal valor, DateTime dataCadastro, DateTime? dataAtualizacao, string imagem, int quantidadeEstoque)
+        public Produto(string nome, string descricao, bool ativo, decimal valor, string imagem, int quantidadeEstoque)
         {
             Nome = nome;
             Descricao = descricao;
             Ativo = ativo;
             Valor = valor;
-            DataCadastro = dataCadastro;
-            DataAtualizacao = dataAtualizacao;
             Imagem = imagem;
             QuantidadeEstoque = quantidadeEstoque;
         }

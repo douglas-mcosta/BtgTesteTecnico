@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Queries\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\building blocks\BTG.Core\BTG.Core.csproj" />
     <ProjectReference Include="..\BTG.Ecommerce.Domain\BTG.Ecommerce.Domain.csproj" />
   </ItemGroup>

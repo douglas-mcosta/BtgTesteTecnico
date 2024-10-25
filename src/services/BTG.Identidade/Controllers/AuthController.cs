@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 
 namespace BTG.Identidade.API.Controllers
 {
+    [Route("auth")]
     public class AuthController : MainController
     {
 

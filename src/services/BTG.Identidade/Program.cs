@@ -21,6 +21,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+    app.UseCors("Total");
 app.UseHttpsRedirection();
 
 app.UseJwtConfiguration();

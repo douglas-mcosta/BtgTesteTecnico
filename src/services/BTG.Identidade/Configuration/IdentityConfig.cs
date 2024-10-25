@@ -3,6 +3,7 @@ using BTG.Identidade.API.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using BTG.WebAPI.Core.Identidate;
+using Microsoft.AspNetCore.Mvc;
 namespace BTG.Identidade.API.Configuration
 {
     public static class IdentityConfig
@@ -22,6 +23,22 @@ namespace BTG.Identidade.API.Configuration
             .AddErrorDescriber<IdentityMensagensPortugues>()
             .AddDefaultTokenProviders();
 
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+
+            });
+
+            services.AddCors(options =>
+            {
+
+                options.AddPolicy("Total",
+                    builder =>
+                        builder
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
 
 
             return services;
