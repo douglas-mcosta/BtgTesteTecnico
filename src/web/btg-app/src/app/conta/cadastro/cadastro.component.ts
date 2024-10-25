@@ -104,11 +104,7 @@ export class CadastroComponent extends FormBaseComponent implements AfterViewIni
 
   processarFalha(fail: any) {
     this.errors = [];
-    let listaErrosSemTratar = fail.error.errors.Mensagens;
-
-    Object.keys(listaErrosSemTratar).forEach((key: any) => this.errors.push(...listaErrosSemTratar[key]))
-
-
+    this.errors = fail.error.errors.Mensagens;
 
     this.toastr.error('Ocorreu um erro!', 'Opa :(');
   }

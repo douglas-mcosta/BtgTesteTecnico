@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CustomFormsModule } from 'ng2-validation';
 import { SharedModule } from '../shared/shared.module';
 import { CatalagoComponent } from './catalago/catalago.component';
+import { ProdutoService } from './services/produto.service';
 
 @NgModule({
   imports: [
@@ -20,6 +21,9 @@ import { CatalagoComponent } from './catalago/catalago.component';
     CustomFormsModule,
     SharedModule
   ],
-  declarations: [ProdutoAppComponent,CatalagoComponent]
+  declarations: [ProdutoAppComponent,CatalagoComponent],
+  providers:[
+    ProdutoService
+  ]
 })
 export class ProdutoModule { }

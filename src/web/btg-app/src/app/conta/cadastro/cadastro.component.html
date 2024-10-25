@@ -2,16 +2,10 @@
 
     <form novalidate (ngSubmit)="adicionarConta()" [formGroup]="cadastroForm">
 
-        <h4 class="mt-3">Crie sua conta</h4>
+        <h5 class="mt-3">Crie sua conta</h5>
         <hr>
 
-        <div class="alert alert-danger" *ngIf="errors.length > 0">
-            <h5 id="msgRetorno">Atenção! Verifique os erros abaixo:</h5>
-            <ul>
-                <li *ngFor="let error of errors">{{ error }}</li>
-            </ul>
-        </div>
-
+        <app-alert-danger [errors]="errors"></app-alert-danger>
         <div class="form-group">
             <label class="col-md-2 control-label">Nome completo</label>
             <div class="col-md-10">

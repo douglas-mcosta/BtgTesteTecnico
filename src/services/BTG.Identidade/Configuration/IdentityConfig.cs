@@ -12,7 +12,6 @@ namespace BTG.Identidade.API.Configuration
         {
             services.AddHttpContextAccessor();
 
-            services.AddJwtConfiguration(configuration);
 
             services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
@@ -22,6 +21,8 @@ namespace BTG.Identidade.API.Configuration
              .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddErrorDescriber<IdentityMensagensPortugues>()
             .AddDefaultTokenProviders();
+
+            services.AddJwtConfiguration(configuration);
 
             services.Configure<ApiBehaviorOptions>(options =>
             {

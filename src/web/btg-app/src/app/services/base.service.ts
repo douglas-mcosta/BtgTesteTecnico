@@ -1,7 +1,6 @@
 import { environment } from 'src/environments/environment';
 import { HttpHeaders, HttpErrorResponse } from "@angular/common/http";
 import { throwError } from 'rxjs';
-// import { BadRequestResult } from '../models/response-result';
 import { TokenStorage } from '../utils/token-storage';
 import { BadRequestResult } from '../models/response-result';
 
@@ -46,7 +45,7 @@ export abstract class BaseService {
       }
 
       if (response.status === 400) {
-        customResponse.error.errors.Mensagens = response.error.errors;
+        Object.keys(response.error.errors).forEach((key: any) => customResponse.error.errors.Mensagens.push(...response.error.errors[key]))
       }
     }
 

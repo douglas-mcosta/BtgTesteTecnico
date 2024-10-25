@@ -8,6 +8,8 @@ import { CadastroComponent } from './cadastro/cadastro.component';
 import { ContaService } from './services/conta.service';
 import { CustomFormsModule } from 'ng2-validation';
 import { ContaRoutingModule } from './conta.routing';
+import { LoginComponent } from './login/login.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -17,9 +19,10 @@ import { ContaRoutingModule } from './conta.routing';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    CustomFormsModule
+    CustomFormsModule,
+    SharedModule
   ],
-  declarations: [ContaAppComponent,CadastroComponent],
+  declarations: [ContaAppComponent,CadastroComponent,LoginComponent],
   providers:[ContaService]
 })
 export class ContaModule { }

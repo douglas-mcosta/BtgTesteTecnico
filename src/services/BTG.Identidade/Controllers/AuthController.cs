@@ -1,36 +1,32 @@
 ﻿using BTG.Core.Messages.Integration;
-using BTG.Identidade.API.Extensions;
 using BTG.Identidade.API.Models;
-using BTG.Identidade.API.Services.NSE.Identidade.API.Services;
+using BTG.Identidade.API.Services;
 using BTG.MessageBus;
 using BTG.WebAPI.Core.Controllers;
 using BTG.WebAPI.Core.Identidate;
 using BTG.WebAPI.Core.User;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 
 namespace BTG.Identidade.API.Controllers
 {
-    [Route("auth")]
-    public class AuthController : MainController
+    [Route("identidade")]
+    public class IdentidadeController : MainController
     {
-
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
         private readonly TokenSettings _appSettings;
         private readonly AuthenticationService _authenticationService;
         private readonly IMessageBus _bus;
         private readonly IAspNetUser _aspNetUser;
-        public AuthController(SignInManager<IdentityUser> signInManager,
-                              UserManager<IdentityUser> userManager,
+        public IdentidadeController(
                               IOptions<TokenSettings> appSettings,
                               IMessageBus bus,
                               IAspNetUser aspNetUser,
                               AuthenticationService authenticationService)
         {
-            _signInManager = signInManager;
-            _userManager = userManager;
+         
             _appSettings = appSettings.Value;
             _bus = bus;
             _aspNetUser = aspNetUser;
@@ -70,7 +66,7 @@ namespace BTG.Identidade.API.Controllers
             return CustomResponse();
         }
 
-        [HttpPost("login")]
+        [HttpPost("entrar")]
         public async Task<IActionResult> Login(UsuarioLoginViewModel model)
         {
             if (!ModelState.IsValid)
@@ -93,9 +89,17 @@ namespace BTG.Identidade.API.Controllers
             return CustomResponse();
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet("teste")]
+        public async Task<IActionResult> Teste()
+        {
+            
+            return CustomResponse("teste");
+        }
+
         private async Task<ResponseMessage> RegistrarCliente(RegistroUsuarioViewModel model)
         {
-            var usuario = await _userManager.FindByEmailAsync(model.Email);
+            var usuario = await _authenticationService.UserManager.FindByEmailAsync(model.Email);
             var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(Guid.Parse(usuario.Id), model.Nome, model.Email, model.Cpf);
 
             try
@@ -104,7 +108,7 @@ namespace BTG.Identidade.API.Controllers
             }
             catch
             {
-                await _userManager.DeleteAsync(usuario);
+                await _authenticationService.UserManager.DeleteAsync(usuario);
                 throw;
             }
 

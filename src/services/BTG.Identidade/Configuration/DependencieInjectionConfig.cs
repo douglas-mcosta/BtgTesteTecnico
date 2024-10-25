@@ -1,5 +1,5 @@
 ﻿using BTG.Core.Mediator;
-using BTG.Identidade.API.Services.NSE.Identidade.API.Services;
+using BTG.Identidade.API.Services;
 using BTG.WebAPI.Core.User;
 using System.Reflection;
 

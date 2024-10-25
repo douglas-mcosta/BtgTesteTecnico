@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  IdentityUrl: "https://localhost:7116/auth/",
-  EcommerceUrl: "https://localhost:44390/api/",
+  IdentityUrl: "https://localhost:7116/identidade/",
+  EcommerceUrl: "https://localhost:7189/api/",
   viaCep: (cep: string) => `https://viacep.com.br/ws/${cep}/json`
 };
 

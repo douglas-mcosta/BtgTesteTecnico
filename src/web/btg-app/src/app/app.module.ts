@@ -7,13 +7,12 @@ import { NavegacaoModule } from './navegacao/navegacao.module';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthService } from './services/Auth.service';
 import { TokenInterceptorService } from './services/token.interceptor.service';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { CustomFormsModule } from 'ng2-validation';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 export const httpInterceptorProviders = [
-  // { provide: HTTP_INTERCEPTORS, useClass: ErrorHandlerService, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true }
 ];
 
 @NgModule({
@@ -28,12 +27,11 @@ export const httpInterceptorProviders = [
     HttpClientModule,
     BrowserAnimationsModule,
     NgxSpinnerModule,
-    CustomFormsModule
+    CustomFormsModule,
   ],
   providers: [
-    AuthService,
     httpInterceptorProviders,
-    TokenInterceptorService,
+    AuthService,
   ],
   bootstrap: [AppComponent],
   schemas: [

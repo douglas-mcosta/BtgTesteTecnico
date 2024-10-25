@@ -9,11 +9,10 @@ import { ToastrService } from "ngx-toastr";
 @Injectable()
 export class TokenInterceptorService implements HttpInterceptor {
 
-
     constructor(private authService: AuthService, private router: Router, private toast: ToastrService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+        console.log("teste")
         return this.injetarToken(request, next).pipe(catchError(error => {
 
             if (error instanceof HttpErrorResponse) {

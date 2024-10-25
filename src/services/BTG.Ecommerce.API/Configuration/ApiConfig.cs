@@ -13,11 +13,11 @@ namespace BTG.Ecommerce.API.Configuration
             services.AddDbContext<EcommerceContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddJwtConfiguration(configuration);
             services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
-            services.AddJwtConfiguration(configuration);
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
@@ -48,7 +48,6 @@ namespace BTG.Ecommerce.API.Configuration
 
             app.MapControllers();
 
-            app.UseJwtConfiguration();
             app.UseCors("Total");
 
         }

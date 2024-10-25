@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ContaAppComponent } from '../conta/conta.app.component';
-import { CadastroComponent } from '../conta/cadastro/cadastro.component';
+import { ContaAppComponent } from './conta.app.component';
+import { CadastroComponent } from './cadastro/cadastro.component';
+import { LoginComponent } from './login/login.component';
 
 const contaRouterConfig: Routes = [
     {
         path: '', component: ContaAppComponent,
         children: [
             { path: 'cadastro', component: CadastroComponent},
-            // { path: 'login', component: LoginComponent, canActivate: [ContaGuard] }
+            { path: 'login', component: LoginComponent }
         ]
     }
 ];
