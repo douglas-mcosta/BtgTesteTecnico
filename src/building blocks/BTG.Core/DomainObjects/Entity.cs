@@ -1,6 +1,7 @@
 ﻿using BTG.Core.Messages;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace BTG.Core.DomainObjects
 {
@@ -11,8 +12,8 @@ namespace BTG.Core.DomainObjects
         {
             Id = Guid.NewGuid();
         }
-
         private List<Event> _notificacoes;
+        [JsonIgnore]
         public IReadOnlyCollection<Event> Notificacoes => _notificacoes?.AsReadOnly();
 
         public void AdicionarEvento(Event evento)

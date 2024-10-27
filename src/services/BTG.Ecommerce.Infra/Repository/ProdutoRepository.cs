@@ -37,7 +37,8 @@ namespace BTG.Ecommerce.Infra.Repository
             var query = _context
                .Produtos.AsNoTracking()
                .Where(x =>
-                   string.IsNullOrEmpty(nome) ? true : x.Nome.Contains(nome));
+                   string.IsNullOrEmpty(nome) ? true : x.Nome.Contains(nome))
+               .OrderBy(x=>x.Nome);
 
             var totalResults = query.Count();
 

@@ -3,14 +3,14 @@
     <a class="btn btn-primary" [routerLink]="['/conta/login']">Entrar</a>
   </li>
   <li *ngSwitchCase="false" class="nav-item">
-    <a class="btn btn-success" [routerLink]="['/conta/cadastro']">Crie sua conta</a>
+    <a class="btn btn-outline-primary" [routerLink]="['/conta/cadastro']">Crie sua conta</a>
   </li>
  
   <li *ngSwitchCase="true"  class="nav-item">
     <a class="nav-link text-dark" [routerLink]="['produto/catalogo']">Produtos</a>
   </li>
   <li  *ngSwitchCase="true" class="nav-item">
-    <a class="nav-link text-dark" [routerLink]="['/home']">Pedidos</a>
+    <a class="nav-link text-dark" [routerLink]="['/pedido/lista']">Pedidos</a>
   </li>
   <li *ngSwitchCase="true" class="nav-item">
     <a class="nav-link text-muted" id="saudacaoUsuario" href="javascript:void(0)">{{ email }}</a>

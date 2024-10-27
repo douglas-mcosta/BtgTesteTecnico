@@ -9,6 +9,10 @@ import { PedidoService } from 'src/app/pedido/services/pedido.service';
 import { PedidoViewModel } from 'src/app/pedido/models/pedido.vm';
 import { ToastrService } from 'ngx-toastr';
 import { PedidoStatusEnum } from 'src/app/pedido/models/pedido-status.enum';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ContaService } from 'src/app/conta/services/conta.service';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-catalago',
@@ -25,7 +29,11 @@ export class CatalagoComponent implements OnInit {
     private produtoService: ProdutoService,
     private sp: NgxSpinnerService,
     private pedidoService: PedidoService,
-    private toast: ToastrService) { }
+    private toast: ToastrService,
+    private authService: ContaService,
+    private router: Router
+
+  ) { }
 
   ngOnInit() {
     this.obterCatalogo();
@@ -60,7 +68,22 @@ export class CatalagoComponent implements OnInit {
     this.pedidoService.obterUltimoPedido().subscribe(pedido => this.pedido = pedido);
   }
 
-  adicionarProdutoAoPedido(produto: ProdutoViewModel) {
+  adicionarProdutoAoPedido(produto: any) {
+
+    if (!this.authService.usuarioLogado()) {
+      Swal.fire({
+        icon: "warning",
+        title: "Você precisa estar autenticado para realizar um pedido.",
+        showConfirmButton: false,
+        timer: 2000,
+        willClose: () => {
+          this.router.navigate(['/conta/login']);
+        }
+      });
+
+      return;
+    }
+
     this.sp.show();
     this.pedidoService.adicionarProdutoPedido(produto.id)
       .subscribe(
@@ -71,17 +94,13 @@ export class CatalagoComponent implements OnInit {
       );
   }
   adicionarProdutoPedidoSucesso() {
-    this.toast.success("Adicionado com sucesso!", "Produto");
+    this.toast.success("Adicionado com sucesso!", "Produto", { timeOut: 600 });
     this.obterUltimoPedido();
     this.sp.hide();
   }
   adicionarProdutoPedidoErro(fail: any) {
     this.sp.hide();
-    console.log(...fail.error.errors.Mensagens)
     this.toast.error(...fail.error.errors.Mensagens);
   }
 
-  atualizarPedido(pedido:PedidoViewModel){
-    this.pedido = pedido;
-  }
 }

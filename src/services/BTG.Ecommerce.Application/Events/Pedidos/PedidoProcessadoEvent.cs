@@ -6,15 +6,17 @@ namespace BTG.Ecommerce.Application.Events.Pedidos
 {
     public class PedidoProcessadoEvent : Event
     {
-        public PedidoProcessadoEvent(Guid clienteId, Guid pedidoId, int codigoPedido, List<PedidoItem> itens)
+        public PedidoProcessadoEvent(Guid clienteId,string clienteNome, Guid pedidoId, int codigoPedido, List<PedidoItem> itens)
         {
             ClienteId = clienteId;
+            ClienteNome = clienteNome;
             PedidoId = pedidoId;
             Itens = itens.Select(ParaItemIntregracao).ToList();
             CodigoPedido = codigoPedido;
         }
 
         public Guid ClienteId { get; private set; }
+        public string ClienteNome { get; private set; }
         public Guid PedidoId { get; private set; }
         public int CodigoPedido { get; private set; }
         public List<PedidoItensProcessado> Itens { get; private set; }

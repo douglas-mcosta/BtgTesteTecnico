@@ -28,7 +28,7 @@ namespace BTG.Ecommerce.Domain.Models
 
         public bool PedidoEstaAberto() => PedidoStatus.Equals(PedidoStatus.Aberto);
         public void CancelarPedidoFaltaEstoque() => PedidoStatus = PedidoStatus.CanceladoFaltaEstoque;
-        public void ProcessarPagamento() => PedidoStatus = PedidoStatus.Pago;
+        public void ProcessarPagamento() => PedidoStatus = PedidoStatus.Processado;
 
         public void ProcessarPedido()
         {

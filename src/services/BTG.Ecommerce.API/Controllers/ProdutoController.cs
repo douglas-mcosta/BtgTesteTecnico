@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace BTG.Ecommerce.API.Controllers
 {
     [Route("api/produto")]
-    [Authorize]
     public class ProdutoController : MainController
     {
         private readonly IMediatorHandler _mediatorHandler;

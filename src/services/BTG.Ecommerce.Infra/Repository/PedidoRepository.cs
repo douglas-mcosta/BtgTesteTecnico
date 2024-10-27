@@ -29,24 +29,40 @@ namespace BTG.Ecommerce.Infra.Repository
             _context.Pedidos.Update(pedido);
         }
 
-        public async Task<IEnumerable<Pedido>> ObterListaPorClientId(Guid clienteId)
+        public async Task<IEnumerable<Pedido>> ObterListaPorClientIdAsync(Guid clienteId)
         {
-            return await _context.Pedidos.Include(x => x.PedidoItems).ThenInclude(x => x.Produto).Where(x=> x.ClienteId == clienteId).ToListAsync();
+            return await _context.Pedidos
+                .Include(x => x.Cliente)
+                .Include(x => x.PedidoItems)
+                .ThenInclude(x => x.Produto)
+                .Where(x=> x.ClienteId == clienteId)
+                .OrderByDescending(x=>x.Codigo)
+                .ToListAsync();
         }
 
-        public async Task<Pedido> ObterPorId(Guid id)
+        public async Task<Pedido> ObterPorIdAsync(Guid id)
         {
-            return await _context.Pedidos.Include(x => x.PedidoItems).ThenInclude(x => x.Produto).FirstOrDefaultAsync(x => x.Id == id);
+            return await _context
+                .Pedidos
+                .Include(x => x.Cliente)
+                .Include(x => x.PedidoItems)
+                .ThenInclude(x => x.Produto)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public async Task<Pedido> ObterUltimoPedidoPorClienteId(Guid clienteId)
+        public async Task<Pedido> ObterUltimoPedidoPorClienteIdAsync(Guid clienteId)
         {
-            return await _context.Pedidos.Include(x => x.PedidoItems).ThenInclude(x => x.Produto).OrderByDescending(x=>x.DataCadastro).FirstOrDefaultAsync(x => x.ClienteId == clienteId);
+            return await _context
+                .Pedidos
+                .Include(x=>x.Cliente)
+                .Include(x => x.PedidoItems)
+                .ThenInclude(x => x.Produto)
+                .OrderByDescending(x=>x.DataCadastro).FirstOrDefaultAsync(x => x.ClienteId == clienteId);
         }
         #endregion
 
         #region Item
-        public async Task<PedidoItem> ObterItemPorIdAsync(Guid id)
+        public async Task<PedidoItem> ObterItemPorIdAsyncAsync(Guid id)
         {
             return await _context.PedidoItens.Include(x=>x.Produto).FirstOrDefaultAsync(x=>x.Id == id);
         }

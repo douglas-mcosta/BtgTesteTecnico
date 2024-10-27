@@ -97,7 +97,7 @@ export class CadastroComponent extends FormBaseComponent implements AfterViewIni
 
     this.contaService.tokenStorage.salvarDadosLocaisUsuario(response);
     this.sp.hide();
-    let toast = this.toastr.success('Registro realizado com Sucesso!', 'Bem vindo!!!');
+    let toast = this.toastr.success('Registro realizado com Sucesso!', 'Bem vindo!!!', { timeOut: 500 });
     if (toast) {
       toast.onHidden.subscribe(() => {
         this.router.navigate(['/home']);

@@ -1,3 +1,73 @@
-<p>
-  lista-pedido works!
-</p>
+<div class="container main-container">
+
+  <h5>Meus pedidos</h5>
+  <hr>
+  <table class="table">
+
+    <thead class="table-dark">
+      <tr>
+        <th>
+          Código
+        </th>
+        <th>
+          Nome
+        </th>
+        <th>
+          Total
+        </th>
+        <th>
+          Status
+        </th>
+        <th>
+          Data Processamento
+        </th>
+
+        <th>
+          Detalhes
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of pedidos">
+        <td>
+          {{item.codigo}}
+        </td>
+        <td>
+          {{item.clienteNome}}
+        </td>
+        <td>
+          {{item.valorTotal | currency}}
+        </td>
+        <td>
+          <span *ngIf="item.status == pedidoStatusEnum.Processado" class="badge bg-success">Processado</span>
+          <span *ngIf="item.status == pedidoStatusEnum.Aberto" class="badge bg-secondary">Em aberto</span>
+          <span *ngIf="item.status  == pedidoStatusEnum.CanceladoFaltaEstoque" class="badge bg-danger">Cancelado por
+            falta de estoque</span>
+        </td>
+        <td>
+          {{item.data | date}}
+        </td>
+        <td>
+          <button class="btn btn-primary text-center" (click)="abrirModal(item.id,content)">
+            <i class="fas fa-search"></i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="modal-basic-title">Pedido detalhe</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <app-lista-itens-pedido [pedidoId]=pedidoId></app-lista-itens-pedido>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary" (click)="modal.close('Save click')">Fechar</button>
+  </div>
+</ng-template>
+<hr />

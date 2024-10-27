@@ -30,4 +30,10 @@ export class ContaService extends BaseService {
 
         return response;
     }
+
+
+    usuarioLogado(): boolean {
+        let token = this.tokenStorage.obterTokenUsuario();
+        return token !== null;
+    }
 }

@@ -45,7 +45,8 @@ namespace BTG.Ecommerce.Application.Queries.Produtos
                 Ativo = produto.Ativo,
                 Valor = produto.Valor,
                 Imagem = produto.Imagem,
-                QuantidadeEstoque = produto.QuantidadeEstoque
+                QuantidadeEstoque = produto.QuantidadeEstoque,
+                DataCadastro = produto.DataCadastro
             };
         }
 

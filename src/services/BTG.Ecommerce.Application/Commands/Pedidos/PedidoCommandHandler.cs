@@ -29,7 +29,7 @@ namespace BTG.Ecommerce.Application.Commands.Pedidos
         {
             if (!request.EhValido()) return request.ValidationResult;
 
-            var pedido = await _pedidoRepository.ObterUltimoPedidoPorClienteId(request.ClienteId);
+            var pedido = await _pedidoRepository.ObterUltimoPedidoPorClienteIdAsync(request.ClienteId);
             var produto = await _produtoRepository.ObterPorIdAsync(request.ProdutoId);
 
             if (produto is null)
@@ -61,8 +61,8 @@ namespace BTG.Ecommerce.Application.Commands.Pedidos
         {
             if (!request.EhValido()) return request.ValidationResult;
 
-            var pedido = await _pedidoRepository.ObterUltimoPedidoPorClienteId(request.ClienteId);
-            var item = await _pedidoRepository.ObterItemPorIdAsync(request.ItemId);
+            var pedido = await _pedidoRepository.ObterUltimoPedidoPorClienteIdAsync(request.ClienteId);
+            var item = await _pedidoRepository.ObterItemPorIdAsyncAsync(request.ItemId);
 
             if (pedido is null)
             {
@@ -93,7 +93,7 @@ namespace BTG.Ecommerce.Application.Commands.Pedidos
         {
             if (!request.EhValido()) return request.ValidationResult;
 
-            var pedido = await _pedidoRepository.ObterUltimoPedidoPorClienteId(request.ClienteId);
+            var pedido = await _pedidoRepository.ObterUltimoPedidoPorClienteIdAsync(request.ClienteId);
             var cliente = await _clienteRepository.ObterPorIdAsync(request.ClienteId);
 
             if (pedido is null)
@@ -114,6 +114,11 @@ namespace BTG.Ecommerce.Application.Commands.Pedidos
                 return ValidationResult;
             }
 
+            if(pedido.PedidoStatus != PedidoStatus.Aberto)
+            {
+                AdicionarErro($"O pedido Nº {pedido.Codigo} já foi processado.");
+                return ValidationResult;
+            }
             var produtos = await _produtoRepository.ObterPorPedidoIdAsync(pedido.Id);
 
             ProcessarPedidoSemEstoque(pedido, produtos);
@@ -122,7 +127,7 @@ namespace BTG.Ecommerce.Application.Commands.Pedidos
             ProcessarPedidoComEstoque(pedido, produtos);
             _pedidoRepository.Atualizar(pedido);
 
-            pedido.AdicionarEvento(new PedidoProcessadoEvent(request.ClienteId, request.PedidoId,pedido.Codigo, pedido.PedidoItems));
+            pedido.AdicionarEvento(new PedidoProcessadoEvent(request.ClienteId,cliente.Nome, request.PedidoId,pedido.Codigo, pedido.PedidoItems));
             return await SaveChanges(_pedidoRepository.UnitOfWork);
         }
 

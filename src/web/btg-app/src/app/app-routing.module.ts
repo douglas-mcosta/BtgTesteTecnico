@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CadastroComponent } from './conta/cadastro/cadastro.component';
-import { HomeComponent } from './navegacao/home/home.component';
+import { ContatoComponent } from './navegacao/contato/contato.component';
 
 const routes: Routes = [{ path: '', redirectTo: '/home', pathMatch: 'full' },
-{ path: 'home', component: HomeComponent },
+{ path: 'home', redirectTo: '/produto/catalogo' },
+{ path: 'contato', component: ContatoComponent },
 {
   path: 'conta',
   loadChildren: () => import('./conta/conta.module')
@@ -14,6 +14,11 @@ const routes: Routes = [{ path: '', redirectTo: '/home', pathMatch: 'full' },
   path: 'produto',
   loadChildren: () => import('./produto/produto.module')
     .then(m => m.ProdutoModule)
+},
+{
+  path: 'pedido',
+  loadChildren: () => import('./pedido/pedido.module')
+    .then(m => m.PedidoModule)
 }
 ];
 

@@ -5,7 +5,7 @@ namespace BTG.Relatorio.API.Data.Repository
 {
     public interface IPedidoRepository : IRepository<Pedido>
     {
-        Task<IEnumerable<Pedido>> ObterListaPorClientId(Guid clienteId);
+        Task<IEnumerable<RelatorioPedidoProcessado>> ObterRelatorioPedidoProcessados();
         void Adicionar(Pedido pedido);
     }
 }

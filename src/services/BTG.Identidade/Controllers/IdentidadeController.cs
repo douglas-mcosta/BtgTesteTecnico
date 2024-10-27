@@ -13,7 +13,7 @@ using Microsoft.Extensions.Options;
 
 namespace BTG.Identidade.API.Controllers
 {
-    [Route("identidade")]
+    [Route("api/identidade")]
     public class IdentidadeController : MainController
     {
         private readonly TokenSettings _appSettings;

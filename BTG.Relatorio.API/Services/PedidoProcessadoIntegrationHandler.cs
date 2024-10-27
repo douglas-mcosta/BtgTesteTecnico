@@ -36,6 +36,7 @@ namespace BTG.Relatorio.API.Services
                 Id = message.PedidoId,
                 CodigoCliente = message.ClienteId,
                 CodigoPedido = message.CodigoPedido,
+                NomeCliente = message.ClienteNome
             };
 
             foreach (var item in message.Itens)

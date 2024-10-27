@@ -1,11 +1,21 @@
-<div class="card h-100">
-  <img class="card-img-top" src="/assets/crossplat.jpg" height="164px" width="253px" alt="">
-  <div class="card-body">
-    <h4 class="card-title">Multiplataforma</h4>
-    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.
-    </p>
-  </div>
-  <div class="card-footer">
-    <a href="#" class="btn btn-primary">Saiba mais</a>
+<div class="row">
+  <div  class="col-lg-4 col-md-6 mb-4" *ngFor="let produto of produtos">
+    <div class="card h-100">
+      <img class="card-img-top" [src]="produto.imagem" style="padding: 10px;" width="250" height="250" alt="">
+      <div class="card-body">
+        <h4 class="card-title" style="font-size: 14px;height: 35px;">{{produto.nome}}</h4>
+        <p class="card-text" style="height: 100px;">
+          {{produto.descricao.substring(0,90)}}...
+        </p>
+        <p>
+          <strong>{{ produto.valor | currency}}</strong><br>
+          <small>{{ produto.quantidadeEstoque}} em estoque</small>
+        </p>
+      </div>
+      <div class="card-footer">
+        <button *ngIf="produto.quantidadeEstoque > 0" (click)="adicionarProdutoAoPedido(produto)" class="btn btn-primary">Adicionar ao pedido</button>
+        <span *ngIf="produto.quantidadeEstoque <= 0"  class="text-danger"><b>Produto Esgotado!!!</b></span>
+      </div>
+    </div>
   </div>
 </div>

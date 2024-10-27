@@ -1,5 +1,5 @@
 export enum PedidoStatusEnum {
-    Aberto = 0,
-    CanceladoFaltaEstoque = 1,
+    Aberto = 1,
+    CanceladoFaltaEstoque = 2,
     Processado = 3
 }

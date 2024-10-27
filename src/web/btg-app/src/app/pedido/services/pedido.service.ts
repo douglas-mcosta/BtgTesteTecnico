@@ -10,9 +10,11 @@ export class PedidoService extends BaseService {
 
   private url = {
     obterUltimoPedido: `${environment.EcommerceUrl}pedido`,
+    obterMeusPedidos: `${environment.EcommerceUrl}pedido/meus-pedidos`,
+    obterPedidoPorId: (pedidoId: string) => `${environment.EcommerceUrl}pedido/${pedidoId}`,
     adicionarProdutoPedido: (produtoId: string) => `${environment.EcommerceUrl}pedido/${produtoId}`,
     processarPedido: (pedidoId: string) => `${environment.EcommerceUrl}pedido/processar/${pedidoId}`,
-    removerProdutoPedido: (itemId: string) => `${environment.EcommerceUrl}pedido/${itemId}`,
+    removerProdutoPedido: (itemId: string) => `${environment.EcommerceUrl}pedido/${itemId}`
   }
 
   constructor(private http: HttpClient) { super(); }
@@ -21,6 +23,27 @@ export class PedidoService extends BaseService {
 
     let response = this.http
       .get(this.url.obterUltimoPedido)
+      .pipe(
+        map(this.extractData),
+        catchError(this.serviceError));
+
+    return response;
+  }
+
+  obterMeusPedidos(): Observable<PedidoViewModel[]> {
+
+    let response = this.http
+      .get(this.url.obterMeusPedidos)
+      .pipe(
+        map(this.extractData),
+        catchError(this.serviceError));
+
+    return response;
+  }
+
+  obterPedidoPorId(pedidoId: string): Observable<PedidoViewModel> {
+    let response = this.http
+      .get(this.url.obterPedidoPorId(pedidoId))
       .pipe(
         map(this.extractData),
         catchError(this.serviceError));

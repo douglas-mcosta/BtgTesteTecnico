@@ -7,6 +7,8 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { PedidoRoutingModule } from './pedido.routing';
+import { ListaPedidoComponent } from './lista-pedido/lista-pedido.component';
+import { ListaItensPedidoComponent } from './lista-itens-pedido/lista-itens-pedido.component';
 
 @NgModule({
   imports: [
@@ -15,9 +17,11 @@ import { PedidoRoutingModule } from './pedido.routing';
     PedidoRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule,
+    SharedModule
+
+    
   ],
-  declarations: [PedidoAppComponent,PedidoResumoComponent],
+  declarations: [PedidoAppComponent,PedidoResumoComponent,ListaPedidoComponent,ListaItensPedidoComponent],
   exports:[PedidoResumoComponent],
   providers:[PedidoService]
 })

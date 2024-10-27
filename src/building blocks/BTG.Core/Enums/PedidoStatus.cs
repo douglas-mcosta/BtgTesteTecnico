@@ -2,8 +2,8 @@
 {
     public enum PedidoStatus
     {
-        Aberto = 0,
-        CanceladoFaltaEstoque = 1,
-        Pago = 3,
+        Aberto = 1,
+        CanceladoFaltaEstoque = 2,
+        Processado = 3,
     }
 }

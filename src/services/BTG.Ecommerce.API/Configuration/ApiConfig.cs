@@ -17,7 +17,7 @@ namespace BTG.Ecommerce.API.Configuration
             services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+            services.AddSwaggerConfiguration();
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
 
@@ -37,8 +37,7 @@ namespace BTG.Ecommerce.API.Configuration
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UserSwaggerConfiguration();
             }
 
             app.UseCors("Total");

@@ -3,12 +3,13 @@ using BTG.Ecommerce.Application.Commands.Pedidos;
 using BTG.Ecommerce.Application.Queries.Pedidos;
 using BTG.WebAPI.Core.Controllers;
 using BTG.WebAPI.Core.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BTG.Ecommerce.API.Controllers
 {
+    [Authorize]
     [Route("api/pedido")]
-    [ApiController]
     public class PedidoController : MainController
     {
         private readonly IMediatorHandler _mediatorHandler;
@@ -25,7 +26,21 @@ namespace BTG.Ecommerce.API.Controllers
         [HttpGet]
         public async Task<IActionResult> ObterUltimoPedido()
         {
-            var result = await _pedidoQueries.ObterUltimoPedido(_user.GetUserId());
+            var result = await _pedidoQueries.ObterUltimoPedidoAsync(_user.GetUserId());
+            return CustomResponse(result);
+        }
+
+        [HttpGet("meus-pedidos")]
+        public async Task<IActionResult> ObterMeusPedidos()
+        {
+            var result = await _pedidoQueries.ObterListaPorClienteIdAsync(_user.GetUserId());
+            return CustomResponse(result);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> ObterPedidoPorId(Guid id)
+        {
+            var result = await _pedidoQueries.ObterPorIdAsync(id);
             return CustomResponse(result);
         }
 

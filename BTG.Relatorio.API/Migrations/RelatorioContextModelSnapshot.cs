@@ -34,8 +34,10 @@ namespace BTG.Relatorio.API.Migrations
                     b.Property<int>("CodigoPedido")
                         .HasColumnType("int");
 
-                    b.Property<int>("NomeCliente")
-                        .HasColumnType("int");
+                    b.Property<string>("NomeCliente")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -61,6 +63,9 @@ namespace BTG.Relatorio.API.Migrations
 
                     b.Property<int>("Quantidade")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 

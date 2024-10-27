@@ -15,7 +15,7 @@ namespace BTG.Ecommerce.Application.Events.Pedidos
 
         public async Task Handle(PedidoProcessadoEvent notification, CancellationToken cancellationToken)
         {
-            await _bus.PublishAsync(new PedidoProcessadoIntegrationEvent(notification.ClienteId, notification.PedidoId, notification.CodigoPedido, notification.Itens));
+            await _bus.PublishAsync(new PedidoProcessadoIntegrationEvent(notification.ClienteId,notification.ClienteNome, notification.PedidoId, notification.CodigoPedido, notification.Itens));
         }
     }
 }

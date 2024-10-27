@@ -5,6 +5,7 @@ import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { PedidoItemViewModel } from '../models/pedido-item.vm';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pedido-resumo',
@@ -19,7 +20,8 @@ export class PedidoResumoComponent implements OnInit {
   constructor(
     private pedidoService: PedidoService,
     private sp: NgxSpinnerService,
-    private toast: ToastrService) { }
+    private toast: ToastrService,
+    private router: Router) { }
 
   ngOnInit() {
     this.obterUltimoPedido();
@@ -69,8 +71,15 @@ export class PedidoResumoComponent implements OnInit {
       .subscribe({
         next: () => {
           this.obterUltimoPedido();
-          this.toast.success("Pedido processado com sucesso.", "Processar pedido")
+          var toast = this.toast.success("Pedido processado com sucesso.", "Processar pedido", { timeOut: 1000 })
           this.sp.hide();
+          if (toast) {
+            toast.onHidden.subscribe(() => {
+              this.router.navigate(['/pedido/lista']);
+            });
+          }
+
+
         },
         error: () => {
           this.sp.hide();

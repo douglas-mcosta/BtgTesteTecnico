@@ -13,16 +13,16 @@ namespace BTG.Ecommerce.Application.Queries.Pedidos
             _pedidoRepository = pedidoRepository;
         }
 
-        public async Task<IEnumerable<PedidoViewModel>> ObterListaPorClienteId(Guid clientId)
+        public async Task<IEnumerable<PedidoViewModel>> ObterListaPorClienteIdAsync(Guid clientId)
         {
-            var pedido = await _pedidoRepository.ObterListaPorClientId(clientId);
+            var pedido = await _pedidoRepository.ObterListaPorClientIdAsync(clientId);
             var pedidoVw = pedido.Select(ParaPedidoViewModel); ;
             return pedidoVw;
         }
 
-        public async Task<PedidoViewModel> ObterUltimoPedido(Guid clientId)
+        public async Task<PedidoViewModel> ObterUltimoPedidoAsync(Guid clientId)
         {
-            var pedido = await _pedidoRepository.ObterUltimoPedidoPorClienteId(clientId);
+            var pedido = await _pedidoRepository.ObterUltimoPedidoPorClienteIdAsync(clientId);
             var pedidoVw = ParaPedidoViewModel(pedido);
             return pedidoVw;
         }
@@ -34,12 +34,12 @@ namespace BTG.Ecommerce.Application.Queries.Pedidos
             {
                 Id = pedido.Id,
                 ClienteId = pedido.ClienteId,
+                ClienteNome = pedido?.Cliente?.Nome ?? "",
                 Codigo = pedido.Codigo,
                 Status = (int)pedido.PedidoStatus,
                 Data = pedido.DataCadastro,
                 ValorTotal = pedido.ValorTotal,
-                Itens = new List<PedidoItemViewModel>(),
-                Endereco = new EnderecoViewModel()
+                Itens = new List<PedidoItemViewModel>()
             };
 
             foreach (var item in pedido.PedidoItems)
@@ -60,6 +60,13 @@ namespace BTG.Ecommerce.Application.Queries.Pedidos
             }
 
             return pedidoVw;
+        }
+
+        public async Task<PedidoViewModel> ObterPorIdAsync(Guid id)
+        {
+            var pedido = await _pedidoRepository.ObterPorIdAsync(id);
+            var pedidoVw = ParaPedidoViewModel(pedido);
+            return pedidoVw; throw new NotImplementedException();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace BTG.Relatorio.API.Model
         }
         public Guid CodigoCliente { get; set; }
         public int CodigoPedido { get; set; }
-        public int NomeCliente { get; set; }
+        public string NomeCliente { get; set; }
         public List<PedidoItem> Itens { get; set; }
     }
 }
