@@ -23,7 +23,7 @@ namespace BTG.Ecommerce.Application.Commands.Clientes
             if (!message.EhValido()) return message.ValidationResult;
 
             var cliente = new Cliente(message.Id, message.Nome, message.Email, message.Cpf);
-            var clienteExistente = await _clienteRepository.ObterPorCpf(cliente.Cpf.Numero);
+            var clienteExistente = await _clienteRepository.ObterPorCpfAsync(cliente.Cpf.Numero);
             if (clienteExistente != null)
             {
                 AdicionarErro("Já existe um cliente com esse CPF cadastrado.");

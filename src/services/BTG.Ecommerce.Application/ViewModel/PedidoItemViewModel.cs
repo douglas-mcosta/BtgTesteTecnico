@@ -5,10 +5,12 @@ namespace BTG.Ecommerce.Application.ViewModel
 {
     public class PedidoItemViewModel
     {
+        public Guid Id { get; set; }
         public Guid ProdutoId { get; set; }
         public Guid PedidoId { get; set; }
         public string Nome { get; set; }
         public decimal Valor { get; set; }
+        public decimal ValorTotal { get; set; }
         public string Imagem { get; set; }
         public int Quantidade { get; set; }
 

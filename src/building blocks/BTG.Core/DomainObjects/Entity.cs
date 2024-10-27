@@ -6,7 +6,6 @@ namespace BTG.Core.DomainObjects
 {
     public abstract class Entity
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid Id { get; set; }
         protected Entity()
         {

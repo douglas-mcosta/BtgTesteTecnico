@@ -6,6 +6,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { PagedResult } from 'src/app/models/paged-result';
 import { FormControl } from '@angular/forms';
 import { PedidoService } from 'src/app/pedido/services/pedido.service';
+import { PedidoViewModel } from 'src/app/pedido/models/pedido.vm';
+import { ToastrService } from 'ngx-toastr';
+import { PedidoStatusEnum } from 'src/app/pedido/models/pedido-status.enum';
 
 @Component({
   selector: 'app-catalago',
@@ -15,14 +18,21 @@ import { PedidoService } from 'src/app/pedido/services/pedido.service';
 export class CatalagoComponent implements OnInit {
 
   produtos: PagedResult<ProdutoViewModel> = new PagedResult<ProdutoViewModel>();
+  pedido = new PedidoViewModel();
   nome = new FormControl("");
-  constructor(private produtoService: ProdutoService, private sp: NgxSpinnerService,pedidoService: PedidoService) { }
+  pedidoStatus = PedidoStatusEnum;
+  constructor(
+    private produtoService: ProdutoService,
+    private sp: NgxSpinnerService,
+    private pedidoService: PedidoService,
+    private toast: ToastrService) { }
 
   ngOnInit() {
-    this.obterPedidos();
+    this.obterCatalogo();
+    this.obterUltimoPedido()
   }
 
-  obterPedidos(): void {
+  obterCatalogo(): void {
     this.sp.show();
     this.produtoService.obterCatalogo(this.produtos.pageSize, this.produtos.pageIndex, this.nome.value).subscribe(
       {
@@ -31,8 +41,11 @@ export class CatalagoComponent implements OnInit {
       })
   }
 
+  pesquisar() {
+    this.obterCatalogo();
+  }
+
   processarSucesso(produtos: PagedResult<ProdutoViewModel>): void {
-    console.log(produtos)
     this.produtos = produtos;
     this.sp.hide();
 
@@ -40,17 +53,35 @@ export class CatalagoComponent implements OnInit {
 
   processarFalha(erro: any) {
     this.sp.hide();
-    // this.toastr.error('Ocorreu um erro!', 'Opa :(');
-    // this.errors = erro.error.errors.Mensagens;
+    this.toast.error('Erro ao obter produtos, tente novamente mais tarde.', 'Catalogo');
   }
 
-
-  adicionarProdutoAoPedido(produto: ProdutoViewModel){
-
+  obterUltimoPedido() {
+    this.pedidoService.obterUltimoPedido().subscribe(pedido => this.pedido = pedido);
   }
 
-  pesquisar() {
-    this.obterPedidos();
+  adicionarProdutoAoPedido(produto: ProdutoViewModel) {
+    this.sp.show();
+    this.pedidoService.adicionarProdutoPedido(produto.id)
+      .subscribe(
+        {
+          next: () => this.adicionarProdutoPedidoSucesso(),
+          error: (error) => this.adicionarProdutoPedidoErro(error)
+        }
+      );
+  }
+  adicionarProdutoPedidoSucesso() {
+    this.toast.success("Adicionado com sucesso!", "Produto");
+    this.obterUltimoPedido();
+    this.sp.hide();
+  }
+  adicionarProdutoPedidoErro(fail: any) {
+    this.sp.hide();
+    console.log(...fail.error.errors.Mensagens)
+    this.toast.error(...fail.error.errors.Mensagens);
   }
 
+  atualizarPedido(pedido:PedidoViewModel){
+    this.pedido = pedido;
+  }
 }

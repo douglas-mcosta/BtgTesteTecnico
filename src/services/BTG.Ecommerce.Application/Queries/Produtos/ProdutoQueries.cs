@@ -39,11 +39,13 @@ namespace BTG.Ecommerce.Application.Queries.Produtos
         {
             return new ProdutoViewModel
             {
+                Id = produto.Id,
                 Nome = produto.Nome,
                 Descricao = produto.Descricao,
                 Ativo = produto.Ativo,
                 Valor = produto.Valor,
-                Imagem = produto.Imagem 
+                Imagem = produto.Imagem,
+                QuantidadeEstoque = produto.QuantidadeEstoque
             };
         }
 

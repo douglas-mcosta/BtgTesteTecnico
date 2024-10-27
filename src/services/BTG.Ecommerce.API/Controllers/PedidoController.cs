@@ -22,6 +22,13 @@ namespace BTG.Ecommerce.API.Controllers
             _pedidoQueries = pedidoQueries;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ObterUltimoPedido()
+        {
+            var result = await _pedidoQueries.ObterUltimoPedido(_user.GetUserId());
+            return CustomResponse(result);
+        }
+
         [HttpPost("{produtoId}")]
         public async Task<IActionResult> AdicionarItemPedido(Guid produtoId)
         {
@@ -32,11 +39,25 @@ namespace BTG.Ecommerce.API.Controllers
             return CustomResponse(result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> ObterUltimoPedido()
+        [HttpPut("processar/{pedidoId}")]
+        public async Task<IActionResult> ProcessarPedidoPedido(Guid pedidoId)
         {
-            var result = _pedidoQueries.ObterUltimoPedido(_user.GetUserId());
+            var usuarioId = _user.GetUserId();
+            var commad = new ProcessarPedidoCommand(pedidoId, _user.GetUserId());
+
+            var result = await _mediatorHandler.SendCommand(commad);
             return CustomResponse(result);
         }
+
+        [HttpDelete("{itemId}")]
+        public async Task<IActionResult>RemoverItemPedido(Guid itemId)
+        {
+            var usuarioId = _user.GetUserId();
+            var commad = new RemoverItemPedidoCommand(itemId, _user.GetUserId());
+
+            var result = await _mediatorHandler.SendCommand(commad);
+            return CustomResponse(result);
+        }
+
     }
 }

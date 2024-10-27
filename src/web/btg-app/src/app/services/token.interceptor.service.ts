@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
-import { AuthService } from './Auth.service';
 import { ToastrService } from "ngx-toastr";
+import { ContaService } from '../conta/services/conta.service';
 
 @Injectable()
 export class TokenInterceptorService implements HttpInterceptor {
 
-    constructor(private authService: AuthService, private router: Router, private toast: ToastrService) { }
+    constructor(private authService: ContaService, private router: Router, private toast: ToastrService) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return this.injetarToken(request, next).pipe(catchError(error => {

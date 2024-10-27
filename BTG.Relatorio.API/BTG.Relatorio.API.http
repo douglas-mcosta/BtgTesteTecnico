@@ -1,0 +1,6 @@
+@BTG.Relatorio.API_HostAddress = http://localhost:5102
+
+GET {{BTG.Relatorio.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

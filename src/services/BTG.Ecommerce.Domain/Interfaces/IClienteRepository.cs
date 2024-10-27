@@ -6,7 +6,8 @@ namespace BTG.Ecommerce.Domain.Interfaces
     public interface IClienteRepository : IRepository<Cliente>
     {
         void Adicionar(Cliente cliente);
-        Task<IEnumerable<Cliente>> ObterTodos();
-        Task<Cliente> ObterPorCpf(string cpf);
+        Task<IEnumerable<Cliente>> ObterTodosAsync();
+        Task<Cliente> ObterPorCpfAsync(string cpf);
+        Task<Cliente> ObterPorIdAsync(Guid id);
     }
 }

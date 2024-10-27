@@ -20,7 +20,7 @@ namespace BTG.Ecommerce.Infra.Context
         public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Produto> Produtos { get; set; }
         public DbSet<Pedido> Pedidos { get; set; }
-        public DbSet<PedidoItem> PedidoItems { get; set; }
+        public DbSet<PedidoItem> PedidoItens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

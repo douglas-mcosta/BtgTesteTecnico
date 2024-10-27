@@ -30,7 +30,7 @@ namespace BTG.Ecommerce.Domain.Models
 
         private PedidoItem() { }
 
-        internal decimal CalcularValor() => Quantidade * ValorUnitario;
+        public decimal CalcularValor() => Quantidade * ValorUnitario;
         internal decimal SomarQuantidade(int quantidade) => Quantidade += quantidade;
     }
 }

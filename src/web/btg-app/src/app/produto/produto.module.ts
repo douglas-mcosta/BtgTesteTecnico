@@ -10,6 +10,8 @@ import { CatalagoComponent } from './catalago/catalago.component';
 import { ProdutoService } from './services/produto.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { PedidoService } from '../pedido/services/pedido.service';
+import { PedidoModule } from '../pedido/pedido.module';
 
 @NgModule({
   imports: [
@@ -21,13 +23,15 @@ import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
     CustomFormsModule,
     SharedModule,
     NgxSpinnerModule,
-    NgbModule
+    NgbModule,
+    PedidoModule
   ],
   declarations: [
     ProdutoAppComponent,
     CatalagoComponent],
   providers: [
-    ProdutoService
+    ProdutoService,
+    PedidoService
   ]
 })
 export class ProdutoModule { }

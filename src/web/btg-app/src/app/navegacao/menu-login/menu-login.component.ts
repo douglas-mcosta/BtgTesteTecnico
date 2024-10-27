@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/Auth.service';
+import { ContaService } from 'src/app/conta/services/conta.service';
 
 @Component({
   selector: 'app-menu-login',
@@ -10,7 +10,7 @@ import { AuthService } from 'src/app/services/Auth.service';
 export class MenuLoginComponent  {
 
   email = '';
-  constructor(private router: Router, private auth: AuthService) { }
+  constructor(private router: Router, private auth: ContaService) { }
 
   usuarioLogado(): boolean {
 

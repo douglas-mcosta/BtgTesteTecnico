@@ -9,31 +9,6 @@ namespace BTG.Ecommerce.Infra.Mappings
         public void Configure(EntityTypeBuilder<Pedido> builder)
         {
             builder.HasKey(p => p.Id);
-            builder.Property(p => p.Id).ValueGeneratedNever();
-
-            builder.OwnsOne(p => p.Endereco, e =>
-            {
-                e.Property(pe => pe.Logradouro)
-                    .HasColumnName("Logradouro");
-
-                e.Property(pe => pe.Numero)
-                    .HasColumnName("Numero");
-
-                e.Property(pe => pe.Complemento)
-                    .HasColumnName("Complemento");
-
-                e.Property(pe => pe.Bairro)
-                    .HasColumnName("Bairro");
-
-                e.Property(pe => pe.Cep)
-                    .HasColumnName("Cep");
-
-                e.Property(pe => pe.Cidade)
-                    .HasColumnName("Cidade");
-
-                e.Property(pe => pe.Estado)
-                    .HasColumnName("Estado");
-            });
 
             builder.Property(p => p.Codigo)
                 .HasDefaultValueSql("NEXT VALUE FOR SequenciaCodigoPedido");

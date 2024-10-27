@@ -20,7 +20,7 @@ namespace BTG.Ecommerce.Infra.Mappings
             builder.HasOne(i => i.Produto)
                .WithMany(p => p.PedidoItens);
 
-            builder.ToTable("PedidoItems");
+            builder.ToTable("PedidoItens");
         }
     }
 }

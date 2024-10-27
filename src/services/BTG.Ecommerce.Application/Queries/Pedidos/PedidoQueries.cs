@@ -38,36 +38,26 @@ namespace BTG.Ecommerce.Application.Queries.Pedidos
                 Status = (int)pedido.PedidoStatus,
                 Data = pedido.DataCadastro,
                 ValorTotal = pedido.ValorTotal,
-                PedidoItems = new List<PedidoItemViewModel>(),
+                Itens = new List<PedidoItemViewModel>(),
                 Endereco = new EnderecoViewModel()
             };
 
             foreach (var item in pedido.PedidoItems)
             {
-                pedidoVw.PedidoItems.Add(
+                pedidoVw.Itens.Add(
                     new PedidoItemViewModel
                     {
+                        Id = item.Id,
+                        ProdutoId = item.ProdutoId,
+                        PedidoId = item.PedidoId,
                         Nome = item.ProdutoNome,
                         Imagem = item.ProdutoImagem,
                         Quantidade = item.Quantidade,
-                        ProdutoId = item.ProdutoId,
                         Valor = item.ValorUnitario,
-                        PedidoId = item.PedidoId
+                        ValorTotal = item.CalcularValor()
                     }
                 );
             }
-
-            if (pedido.Endereco is not null)
-                pedidoVw.Endereco = new EnderecoViewModel
-                {
-                    Logradouro = pedido.Endereco.Logradouro,
-                    Numero = pedido.Endereco.Numero,
-                    Complemento = pedido.Endereco.Complemento,
-                    Bairro = pedido.Endereco.Bairro,
-                    Cep = pedido.Endereco.Cep,
-                    Cidade = pedido.Endereco.Cidade,
-                    Estado = pedido.Endereco.Estado
-                };
 
             return pedidoVw;
         }

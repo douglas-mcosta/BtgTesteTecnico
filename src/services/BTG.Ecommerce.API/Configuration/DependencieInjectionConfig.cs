@@ -2,6 +2,7 @@
 using BTG.Ecommerce.Application.Commands.Clientes;
 using BTG.Ecommerce.Application.Commands.Pedidos;
 using BTG.Ecommerce.Application.Events.Clientes;
+using BTG.Ecommerce.Application.Events.Pedidos;
 using BTG.Ecommerce.Application.Queries.Pedidos;
 using BTG.Ecommerce.Application.Queries.Produtos;
 using BTG.Ecommerce.Domain.Interfaces;
@@ -27,10 +28,14 @@ namespace BTG.Ecommerce.API.Configuration
             //Application
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<IRequestHandler<RegistrarClienteCommand, ValidationResult>, ClienteCommandHandler>();
+
             services.AddScoped<IRequestHandler<AdicionarItemPedidoCommand, ValidationResult>, PedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<RemoverItemPedidoCommand, ValidationResult>, PedidoCommandHandler>();
+            services.AddScoped<IRequestHandler<ProcessarPedidoCommand, ValidationResult>, PedidoCommandHandler>();
 
             //Event
             services.AddScoped<INotificationHandler<ClienteRegistradoEvent>, ClienteEventHandler>();
+            services.AddScoped<INotificationHandler<PedidoProcessadoEvent>, PedidoEventHandler>();
 
             //Queries
             services.AddScoped<IProdutoQueries, ProdutoQueries>();

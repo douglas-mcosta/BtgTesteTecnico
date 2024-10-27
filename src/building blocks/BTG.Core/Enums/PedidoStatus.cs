@@ -3,8 +3,7 @@
     public enum PedidoStatus
     {
         Aberto = 0,
-        AguardandoPagamento = 1,
-        Pago = 2,
-        PagamentoRecusado = 3
+        CanceladoFaltaEstoque = 1,
+        Pago = 3,
     }
 }

@@ -16,101 +16,37 @@
   </div>
 
   <div class="row text-center">
-    <div class="col-8">
+    <div [ngClass]="{'col-12': pedido.status !== pedidoStatus.Aberto,'col-8':pedido.status==pedidoStatus.Aberto}">
       <div class="row">
-        <div class="col-lg-4 col-md-6 mb-4" *ngFor="let produto of produtos.list">
+        <div  class="col-lg-4 col-md-6 mb-4" *ngFor="let produto of produtos.list">
           <div class="card h-100">
-            <img class="card-img-top" [src]="produto.imagem" style="padding: 10px;" width="253px" height="221px" alt="">
+            <img class="card-img-top" [src]="produto.imagem" style="padding: 10px;" width="250" height="250" alt="">
             <div class="card-body">
               <h4 class="card-title" style="font-size: 14px;height: 35px;">{{produto.nome}}</h4>
-              <p class="card-text" style="height: 100;">
+              <p class="card-text" style="height: 100px;">
                 {{produto.descricao.substring(0,90)}}...
               </p>
               <p>
-                <strong>{{ produto.valor | currency}}</strong>
+                <strong>{{ produto.valor | currency}}</strong><br>
+                <small>{{ produto.quantidadeEstoque}} em estoque</small>
               </p>
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-primary">Adicionar ao pedido</a>
+              <button (click)="adicionarProdutoAoPedido(produto)" class="btn btn-primary">Adicionar ao pedido</button>
             </div>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- PEDIDO -->
-    <div class="col-4">
-      <div class="row">
-        <main class="col-md-12">
-          <div class="card">
-            <table class="table table-borderless table-shopping-cart">
-              <thead class="text-muted">
-                <tr class="small text-uppercase">
-                  <th scope="col">Produto</th>
-                  <th scope="col">Valor</th>
-                  <th scope="col"></th>
-                  <th scope="col"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <figure class="itemside">
-                      <div class="aside">
-                        <img src="~/images/produtos/@item.Imagem" alt="@item.Nome" class="img-sm">
-                      </div>
-                      <figcaption class="info">
-                        <a asp-controller="Catalogo" asp-action="ProdutoDetalhe" asp-route-id="@item.ProdutoId">
-                          <h6 style="padding-top: 10px" class="title text-dark">Iphone</h6>
-                        </a>
-                        <p class="text-muted small">4 unidades</p>
-                      </figcaption>
-                    </figure>
-                  </td>
-                  <td>
-                    <div class="price-wrap">
-                      <var class="price"> R$ 400,00</var><br>
-                      <small class="text-muted"> R$ 100 cada</small>
-                    </div>
-                  </td>
-                
-                  <td>
-                    <form method="post" asp-controller="Carrinho" asp-action="RemoverItemCarrinho">
-                      <div>
-
-                        <input type="hidden" id="ProdutoId" name="ProdutoId" value="@item.ProdutoId" />
-
-                        <button type="submit" class="btn btn-danger">
-                          <i class="fas fa-trash-alt"></i>
-                        </button>
-
-                      </div>
-                    </form>
-                  </td>
-                </tr>
-          
-
-              </tbody>
-            </table>
-
-            <div class="card-body border-top">
-              <a asp-controller="Pedido" asp-action="EnderecoEntrega" class="btn btn-primary float-md-right"> Finalizar
-                Compra <i class="fa fa-chevron-right"></i> </a>
-     
-            </div>
-          </div>
-        </main>
-      </div>
-
+    <div class="col-4" *ngIf="pedido.status == pedidoStatus.Aberto">
+      <app-pedido-resumo [(pedido)]="pedido"  *ngIf="pedido.status == pedidoStatus.Aberto"></app-pedido-resumo>
     </div>
-
-
 
   </div>
 
   <div class="row">
-    <ngb-pagination class="d-flex justify-content-center" [collectionSize]="produtos.totalResults"
-      [pageSize]="produtos.pageSize" [(page)]="produtos.pageIndex" (pageChange)="pesquisar()"></ngb-pagination>
+    <ngb-pagination [collectionSize]="produtos.totalResults" [pageSize]="produtos.pageSize"
+      [(page)]="produtos.pageIndex" (pageChange)="pesquisar()"></ngb-pagination>
   </div>
 
   <!-- *ngIf="produtos.totalPages > 1" -->

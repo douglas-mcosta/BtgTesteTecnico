@@ -10,27 +10,31 @@ namespace BTG.Ecommerce.Infra.Repository
 {
     public class ProdutoRepository : IProdutoRepository
     {
-        private readonly EcommerceContext _clienteContext;
+        private readonly EcommerceContext _context;
 
         public ProdutoRepository(EcommerceContext clienteContext)
         {
-            _clienteContext = clienteContext;
+            _context = clienteContext;
         }
 
-        public IUnitOfWork UnitOfWork => _clienteContext;
+        public IUnitOfWork UnitOfWork => _context;
 
         public async Task<Produto> ObterPorIdAsync(Guid id)
         {
-            var result = await _clienteContext
+            var result = await _context
              .Produtos.AsNoTracking()
-             .FirstOrDefaultAsync(x=>x.Id == id);
+             .FirstOrDefaultAsync(x => x.Id == id);
 
             return result;
+        }
+        public void Atualizar(Produto produto)
+        {
+            _context.Produtos.Update(produto);
         }
 
         public async Task<PagedResult<Produto>> ObterTodosAsync(int pageSize, int pageIndex, string nome = null)
         {
-            var query = _clienteContext
+            var query = _context
                .Produtos.AsNoTracking()
                .Where(x =>
                    string.IsNullOrEmpty(nome) ? true : x.Nome.Contains(nome));
@@ -55,8 +59,21 @@ namespace BTG.Ecommerce.Infra.Repository
 
         public void Dispose()
         {
-            _clienteContext.Dispose();
+            _context.Dispose();
         }
 
+        public async Task<IEnumerable<Produto>> ObterPorPedidoIdAsync(Guid pedidoId)
+        {
+            var result = await (from p in _context.Produtos
+                                join pi in _context.PedidoItens on p.Id equals pi.ProdutoId
+                                where pi.PedidoId == pedidoId
+                                select p).ToListAsync();
+            return result;
+        }
+
+        public void Atualizar(IEnumerable<Produto> produtos)
+        {
+            _context.Produtos.UpdateRange(produtos);
+        }
     }
 }

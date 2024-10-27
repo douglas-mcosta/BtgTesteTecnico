@@ -23,7 +23,6 @@ namespace BTG.Ecommerce.API.Configuration
 
             services.AddCors(options =>
             {
-
                 options.AddPolicy("Total",
                     builder =>
                         builder

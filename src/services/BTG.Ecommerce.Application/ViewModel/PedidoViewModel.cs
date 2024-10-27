@@ -1,6 +1,4 @@
-﻿using BTG.Ecommerce.Domain.Models;
-
-namespace BTG.Ecommerce.Application.ViewModel
+﻿namespace BTG.Ecommerce.Application.ViewModel
 {
     public class PedidoViewModel
     {
@@ -10,7 +8,7 @@ namespace BTG.Ecommerce.Application.ViewModel
         public int Status { get; set; }
         public DateTime Data { get; set; }
         public decimal ValorTotal { get; set; }
-        public List<PedidoItemViewModel> PedidoItems { get; set; }
+        public List<PedidoItemViewModel> Itens { get; set; }
 
         public EnderecoViewModel Endereco { get; set; }
        

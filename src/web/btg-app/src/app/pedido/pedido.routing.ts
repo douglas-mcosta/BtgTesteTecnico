@@ -19,4 +19,4 @@ const pedidoRouterConfig: Routes = [
     ],
     exports: [RouterModule]
 })
-export class ProdutoRoutingModule { }
+export class PedidoRoutingModule { }

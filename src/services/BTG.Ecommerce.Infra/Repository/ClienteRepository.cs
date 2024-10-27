@@ -17,12 +17,12 @@ namespace BTG.Ecommerce.Infra.Repository
 
         public IUnitOfWork UnitOfWork => _clienteContext;
 
-        public async Task<IEnumerable<Cliente>> ObterTodos()
+        public async Task<IEnumerable<Cliente>> ObterTodosAsync()
         {
             return await _clienteContext.Clientes.AsNoTracking().ToListAsync();
         }
 
-        public async Task<Cliente> ObterPorCpf(string cpf)
+        public async Task<Cliente> ObterPorCpfAsync(string cpf)
         {
             return await _clienteContext.Clientes.FirstOrDefaultAsync(cliente => cliente.Cpf.Numero == cpf);
         }
@@ -32,12 +32,13 @@ namespace BTG.Ecommerce.Infra.Repository
             _clienteContext.Clientes.Add(cliente);
         }
 
-
+        public async Task<Cliente> ObterPorIdAsync(Guid id)
+        {
+            return await _clienteContext.Clientes.FirstOrDefaultAsync(cliente => cliente.Id == id);
+        }
         public void Dispose()
         {
             _clienteContext.Dispose();
         }
-
-
     }
 }

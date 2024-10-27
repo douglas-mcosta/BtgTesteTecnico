@@ -8,5 +8,8 @@ namespace BTG.Ecommerce.Domain.Interfaces
     {
         Task<PagedResult<Produto>> ObterTodosAsync(int pageSize, int pageIndex, string nome = null);
         Task<Produto> ObterPorIdAsync(Guid id);
+        Task<IEnumerable<Produto>> ObterPorPedidoIdAsync(Guid pedidoId);
+        void Atualizar(Produto produto);
+        void Atualizar(IEnumerable<Produto> produtos);
     }
 }
