@@ -9,9 +9,10 @@ import { ContaService } from '../services/conta.service';
 import { FormBaseComponent } from 'src/app/base-components/form-base.component';
 import { UsuarioViewModel } from '../models/usuario.vm';
 import { CustomValidators } from 'ng2-validation';
-import { concat } from 'rxjs';
-import { cpf } from 'ng-brazil';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { utilsBr } from 'js-brasil';
+import { StringUtils } from 'src/app/utils/string-utils';
+import { NgBrazilValidators } from 'ng-brazil';
 
 @Component({
   selector: 'app-cadastro',
@@ -20,6 +21,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class CadastroComponent extends FormBaseComponent implements AfterViewInit {
 
   @ViewChildren(FormControlName, { read: ElementRef }) formInputElements: ElementRef[] = [];
+  MASKS = utilsBr.MASKS;
 
   errors: any[] = [];
   cadastroForm: FormGroup;
@@ -32,17 +34,6 @@ export class CadastroComponent extends FormBaseComponent implements AfterViewIni
     private sp: NgxSpinnerService) {
 
     super();
-    let senha = new FormControl('', [Validators.required, CustomValidators.rangeLength([6, 15])]);
-    let confirmacaoSenha = new FormControl('', [Validators.required, CustomValidators.rangeLength([6, 15]), CustomValidators.equalTo(senha)]);
-
-    this.cadastroForm = this.fb.group({
-      nome: ['', [Validators.required]],
-      cpf: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      senha: senha,
-      confirmacaoSenha: confirmacaoSenha
-    });
-
 
     this.validationMessages = {
       nome: {
@@ -50,6 +41,7 @@ export class CadastroComponent extends FormBaseComponent implements AfterViewIni
       },
       cpf: {
         required: 'Informe o cpf',
+        cpf: 'cpf inválido',
       },
       email: {
         required: 'Informe o e-mail',
@@ -67,12 +59,20 @@ export class CadastroComponent extends FormBaseComponent implements AfterViewIni
     };
 
     super.configurarMensagensValidacaoBase(this.validationMessages);
-
-
-
   }
 
   ngAfterViewInit(): void {
+    let senha = new FormControl('', [Validators.required, CustomValidators.rangeLength([6, 15])]);
+    let confirmacaoSenha = new FormControl('', [Validators.required, CustomValidators.rangeLength([6, 15]), CustomValidators.equalTo(senha)]);
+
+    this.cadastroForm = this.fb.group({
+      nome: ['', [Validators.required]],
+      cpf: ['', [Validators.required, NgBrazilValidators.cpf]],
+      email: ['', [Validators.required, Validators.email]],
+      senha: senha,
+      confirmacaoSenha: confirmacaoSenha
+    });
+
     super.configurarValidacaoFormularioBase(this.formInputElements, this.cadastroForm);
   }
 
@@ -80,7 +80,7 @@ export class CadastroComponent extends FormBaseComponent implements AfterViewIni
     this.sp.show();
     if (this.cadastroForm.dirty && this.cadastroForm.valid) {
       this.usuario = Object.assign({}, this.usuario, this.cadastroForm.value);
-
+      this.usuario.cpf = StringUtils.somenteNumeros(this.usuario.cpf)
       this.contaService.registrarUsuario(this.usuario)
         .subscribe({
           next: (sucesso) => this.processarSucesso(sucesso),

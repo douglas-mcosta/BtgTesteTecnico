@@ -8,7 +8,6 @@ namespace BTG.Ecommerce.API.Configuration
         {
             services.AddSwaggerGen(options =>
             {
-
                 options.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "BTG - ECommerce.API",

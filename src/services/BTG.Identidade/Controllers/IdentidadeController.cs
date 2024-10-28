@@ -89,12 +89,11 @@ namespace BTG.Identidade.API.Controllers
             return CustomResponse();
         }
 
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("teste")]
         public async Task<IActionResult> Teste()
         {
-            
-            return CustomResponse("teste");
+            var teste = _authenticationService.UserManager.FindByEmailAsync("douglasddmc@gmail.com");
+            return CustomResponse(teste);
         }
 
         private async Task<ResponseMessage> RegistrarCliente(RegistroUsuarioViewModel model)

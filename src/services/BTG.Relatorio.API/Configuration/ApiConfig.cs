@@ -37,8 +37,9 @@ namespace BTG.Relatorio.API.Configuration
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.UserSwaggerConfiguration();
             }
+
+            app.UserSwaggerConfiguration();
 
             app.UseCors("Total");
             app.UseHttpsRedirection();

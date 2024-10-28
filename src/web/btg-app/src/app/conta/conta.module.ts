@@ -10,6 +10,8 @@ import { ContaRoutingModule } from './conta.routing';
 import { LoginComponent } from './login/login.component';
 import { SharedModule } from '../shared/shared.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgBrazil } from 'ng-brazil';
+import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
   imports: [
@@ -20,7 +22,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     ReactiveFormsModule,
     CustomFormsModule,
     SharedModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    TextMaskModule,
+    NgBrazil,
   ],
   declarations: [ContaAppComponent,CadastroComponent,LoginComponent],
   providers:[ContaService]

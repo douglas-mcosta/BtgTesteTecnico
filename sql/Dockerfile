@@ -4,6 +4,6 @@ RUN mkdir -p /usr/work
 WORKDIR /usr/work
 COPY . /usr/work/
 
-
+CMD /bin/bash ./entrypoint.sh
 
 EXPOSE 1433

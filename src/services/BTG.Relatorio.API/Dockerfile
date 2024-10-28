@@ -11,22 +11,22 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["./services/BTG.Identidade/BTG.Identidade.API.csproj", "services/BTG.Identidade/"]
+COPY ["./services/BTG.Relatorio.API/BTG.Relatorio.API.csproj", "services/BTG.Relatorio.API/"]
 COPY ["./building blocks/BTG.Core/BTG.Core.csproj", "building blocks/BTG.Core/"]
 COPY ["./building blocks/BTG.MessageBus/BTG.MessageBus.csproj", "building blocks/BTG.MessageBus/"]
 COPY ["./building blocks/BTG.WebAPI.Core/BTG.WebAPI.Core.csproj", "building blocks/BTG.WebAPI.Core/"]
-RUN dotnet restore "./services/BTG.Identidade/BTG.Identidade.API.csproj"
+RUN dotnet restore "./services/BTG.Relatorio.API/BTG.Relatorio.API.csproj"
 COPY . .
-WORKDIR "./services/BTG.Identidade"
-RUN dotnet build "./BTG.Identidade.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "services/BTG.Relatorio.API"
+RUN dotnet build "./BTG.Relatorio.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./BTG.Identidade.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./BTG.Relatorio.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "BTG.Identidade.API.dll"]
+ENTRYPOINT ["dotnet", "BTG.Relatorio.API.dll"]

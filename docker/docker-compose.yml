@@ -1,0 +1,97 @@
+version: "3"
+
+services:
+    rabbitmq:
+        image: rabbitmq:3.8-management
+        container_name: btg-rabbit
+        ports:
+        - 5672:5672
+        - 15672:15672
+        environment:
+                RABBITMQ_DEFAULT_USER: "btg"
+                RABBITMQ_DEFAULT_PASS: "btg@123"
+       
+    sql-server:
+        image: dockerdmcdev/bgt-sql-server:latest
+        container_name: bgt-sql-server
+        build: 
+            context: ../sql
+            dockerfile: ./Dockerfile
+        ports:
+          - "1433:1433"
+        environment:
+            SA_PASSWORD: "n<8l=8R54I[j"
+            ACCEPT_EULA: "Y"     
+
+    api-identidade:
+        image: dockerdmcdev/btg-ecommerce-api-identidade:latest
+        container_name: btg-api-identidade    
+        build: 
+            context: ../src
+            dockerfile: ./services/BTG.Identidade/Dockerfile  
+        restart: always    
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=http://+80
+        volumes:
+          - dpkeys:/var/data/data_protection_keys/     
+        ports:
+            - "5000:80"
+        depends_on:
+            - rabbitmq
+            - sql-server
+
+    api-ecommerce:
+        image: dockerdmcdev/btg-ecommerce-api-ecommerce:latest
+        container_name: btg-api-ecommerce    
+        build: 
+            context: ../src
+            dockerfile: ./services/BTG.Ecommerce.API/Dockerfile  
+        restart: always    
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=http://+81
+        volumes:
+          - dpkeys:/var/data/data_protection_keys/     
+        ports:
+            - "5001:80"
+        depends_on:
+            - rabbitmq
+            - sql-server
+            - api-identidade
+
+    api-relatorio:
+        image: dockerdmcdev/btg-api-relatorio:latest
+        container_name: btg-api-relatorio    
+        build: 
+            context: ../src
+            dockerfile: ./services/BTG.Relatorio.API/Dockerfile  
+        restart: always    
+        environment: 
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=http://+83
+        volumes:
+          - dpkeys:/var/data/data_protection_keys/     
+        ports:
+            - "5002:80"
+        depends_on:
+            - rabbitmq
+            - sql-server
+            - api-identidade
+
+    web-angular:
+        image: dockerdmcdev/btg-web-angular:latest
+        container_name: btg-web-angular    
+        build: 
+            context: ../src/web/btg-app
+            dockerfile: ./src/Dockerfile  
+        restart: always    
+        ports:
+            - "80:80"
+        depends_on:
+            - rabbitmq
+            - sql-server
+            - api-identidade
+            - api-ecommerce
+volumes:
+    dpkeys:     
