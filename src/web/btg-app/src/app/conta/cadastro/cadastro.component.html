@@ -9,7 +9,7 @@
         <div class="form-group">
             <label class="col-md-2 control-label">Nome completo</label>
             <div class="col-md-10">
-                <input class="form-control" id="email" type="text" placeholder="Nome completo (requerido)"
+                <input class="form-control" id="nome" type="text" placeholder="Nome completo (requerido)"
                     formControlName="nome" [ngClass]="{'is-invalid': displayMessage.nome }" />
                 <span class="text-danger" *ngIf="displayMessage.nome">
                     <p [innerHTML]="displayMessage.nome"></p>

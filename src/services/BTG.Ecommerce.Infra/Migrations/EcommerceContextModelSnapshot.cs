@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BTG.Clientes.Infra.Migrations
+namespace BTG.Ecommerce.Infra.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    partial class ClienteContextModelSnapshot : ModelSnapshot
+    partial class EcommerceContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -28,6 +28,7 @@ namespace BTG.Clientes.Infra.Migrations
             modelBuilder.Entity("BTG.Ecommerce.Domain.Models.Cliente", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DataAtualizacao")
@@ -49,6 +50,7 @@ namespace BTG.Clientes.Infra.Migrations
             modelBuilder.Entity("BTG.Ecommerce.Domain.Models.Pedido", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ClienteId")
@@ -84,6 +86,7 @@ namespace BTG.Clientes.Infra.Migrations
             modelBuilder.Entity("BTG.Ecommerce.Domain.Models.PedidoItem", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("PedidoId")
@@ -120,6 +123,7 @@ namespace BTG.Clientes.Infra.Migrations
             modelBuilder.Entity("BTG.Ecommerce.Domain.Models.Produto", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<bool>("Ativo")

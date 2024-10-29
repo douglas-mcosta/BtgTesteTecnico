@@ -65,7 +65,9 @@ export class CatalagoComponent implements OnInit {
   }
 
   obterUltimoPedido() {
-    this.pedidoService.obterUltimoPedido().subscribe(pedido => this.pedido = pedido);
+    if (this.authService.usuarioLogado()) {
+      this.pedidoService.obterUltimoPedido().subscribe(pedido => this.pedido = pedido);
+    }
   }
 
   adicionarProdutoAoPedido(produto: any) {

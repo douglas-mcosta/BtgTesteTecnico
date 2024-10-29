@@ -4,6 +4,10 @@ RUN mkdir -p /usr/work
 WORKDIR /usr/work
 COPY . /usr/work/
 
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false 
+ENV LC_ALL=en_US.UTF-8 
+ENV LANG=en_US.UTF-8
+
 CMD /bin/bash ./entrypoint.sh
 
 EXPOSE 1433

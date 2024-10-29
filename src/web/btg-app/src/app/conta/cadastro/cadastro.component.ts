@@ -34,6 +34,17 @@ export class CadastroComponent extends FormBaseComponent implements AfterViewIni
     private sp: NgxSpinnerService) {
 
     super();
+    
+    let senha = new FormControl('', [Validators.required, CustomValidators.rangeLength([6, 15])]);
+    let confirmacaoSenha = new FormControl('', [Validators.required, CustomValidators.rangeLength([6, 15]), CustomValidators.equalTo(senha)]);
+
+    this.cadastroForm = this.fb.group({
+      nome: ['', [Validators.required]],
+      cpf: ['', [Validators.required, NgBrazilValidators.cpf]],
+      email: ['', [Validators.required, Validators.email]],
+      senha: senha,
+      confirmacaoSenha: confirmacaoSenha
+    });
 
     this.validationMessages = {
       nome: {
@@ -59,28 +70,23 @@ export class CadastroComponent extends FormBaseComponent implements AfterViewIni
     };
 
     super.configurarMensagensValidacaoBase(this.validationMessages);
+
+
   }
 
   ngAfterViewInit(): void {
-    let senha = new FormControl('', [Validators.required, CustomValidators.rangeLength([6, 15])]);
-    let confirmacaoSenha = new FormControl('', [Validators.required, CustomValidators.rangeLength([6, 15]), CustomValidators.equalTo(senha)]);
-
-    this.cadastroForm = this.fb.group({
-      nome: ['', [Validators.required]],
-      cpf: ['', [Validators.required, NgBrazilValidators.cpf]],
-      email: ['', [Validators.required, Validators.email]],
-      senha: senha,
-      confirmacaoSenha: confirmacaoSenha
-    });
-
     super.configurarValidacaoFormularioBase(this.formInputElements, this.cadastroForm);
+
+    
   }
 
   adicionarConta() {
     this.sp.show();
     if (this.cadastroForm.dirty && this.cadastroForm.valid) {
+
       this.usuario = Object.assign({}, this.usuario, this.cadastroForm.value);
       this.usuario.cpf = StringUtils.somenteNumeros(this.usuario.cpf)
+
       this.contaService.registrarUsuario(this.usuario)
         .subscribe({
           next: (sucesso) => this.processarSucesso(sucesso),

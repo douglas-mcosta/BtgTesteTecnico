@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BTG.Clientes.Infra.Migrations
+namespace BTG.Ecommerce.Infra.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    [Migration("20241024173326_adicionando-pedido-pedidoitem-e-relacionamentos")]
-    partial class adicionandopedidopedidoitemerelacionamentos
+    [Migration("20241028224329_initiall")]
+    partial class initiall
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,7 +64,13 @@ namespace BTG.Clientes.Infra.Migrations
                         .HasColumnType("int")
                         .HasDefaultValueSql("NEXT VALUE FOR SequenciaCodigoPedido");
 
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataProcessamento")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("PedidoStatus")
@@ -114,7 +120,7 @@ namespace BTG.Clientes.Infra.Migrations
 
                     b.HasIndex("ProdutoId");
 
-                    b.ToTable("PedidoItems", (string)null);
+                    b.ToTable("PedidoItens", (string)null);
                 });
 
             modelBuilder.Entity("BTG.Ecommerce.Domain.Models.Produto", b =>
@@ -212,65 +218,7 @@ namespace BTG.Clientes.Infra.Migrations
                         .HasForeignKey("ClienteId")
                         .IsRequired();
 
-                    b.OwnsOne("BTG.Ecommerce.Domain.Models.Endereco", "Endereco", b1 =>
-                        {
-                            b1.Property<Guid>("PedidoId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Bairro")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("Bairro");
-
-                            b1.Property<string>("Cep")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("Cep");
-
-                            b1.Property<string>("Cidade")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("Cidade");
-
-                            b1.Property<string>("Complemento")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("Complemento");
-
-                            b1.Property<string>("Estado")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("Estado");
-
-                            b1.Property<string>("Logradouro")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("Logradouro");
-
-                            b1.Property<string>("Numero")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("nvarchar(100)")
-                                .HasColumnName("Numero");
-
-                            b1.HasKey("PedidoId");
-
-                            b1.ToTable("Pedidos");
-
-                            b1.WithOwner()
-                                .HasForeignKey("PedidoId");
-                        });
-
                     b.Navigation("Cliente");
-
-                    b.Navigation("Endereco")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("BTG.Ecommerce.Domain.Models.PedidoItem", b =>

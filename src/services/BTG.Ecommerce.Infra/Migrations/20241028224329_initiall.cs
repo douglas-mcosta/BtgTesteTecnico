@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace BTG.Clientes.Infra.Migrations
+namespace BTG.Ecommerce.Infra.Migrations
 {
     /// <inheritdoc />
-    public partial class adicionandopedidopedidoitemerelacionamentos : Migration
+    public partial class initiall : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -14,6 +14,41 @@ namespace BTG.Clientes.Infra.Migrations
             migrationBuilder.CreateSequence<int>(
                 name: "SequenciaCodigoPedido",
                 startValue: 1000L);
+
+            migrationBuilder.CreateTable(
+                name: "Clientes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Nome = table.Column<string>(type: "varchar(200)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "varchar(254)", maxLength: 100, nullable: false),
+                    Cpf = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: false),
+                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Clientes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Produtos",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Nome = table.Column<string>(type: "varchar(300)", maxLength: 100, nullable: false),
+                    Descricao = table.Column<string>(type: "varchar(500)", maxLength: 100, nullable: false),
+                    Ativo = table.Column<bool>(type: "bit", nullable: false),
+                    Valor = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Imagem = table.Column<string>(type: "varchar(250)", maxLength: 100, nullable: false),
+                    QuantidadeEstoque = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Produtos", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "Pedidos",
@@ -24,14 +59,9 @@ namespace BTG.Clientes.Infra.Migrations
                     ClienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ValorTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     DataCadastro = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PedidoStatus = table.Column<int>(type: "int", nullable: false),
-                    Logradouro = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Numero = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Complemento = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Bairro = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Cep = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Cidade = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Estado = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DataProcessamento = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PedidoStatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,7 +74,7 @@ namespace BTG.Clientes.Infra.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PedidoItems",
+                name: "PedidoItens",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -57,27 +87,27 @@ namespace BTG.Clientes.Infra.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PedidoItems", x => x.Id);
+                    table.PrimaryKey("PK_PedidoItens", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_PedidoItems_Pedidos_PedidoId",
+                        name: "FK_PedidoItens_Pedidos_PedidoId",
                         column: x => x.PedidoId,
                         principalTable: "Pedidos",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_PedidoItems_Produtos_ProdutoId",
+                        name: "FK_PedidoItens_Produtos_ProdutoId",
                         column: x => x.ProdutoId,
                         principalTable: "Produtos",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_PedidoItems_PedidoId",
-                table: "PedidoItems",
+                name: "IX_PedidoItens_PedidoId",
+                table: "PedidoItens",
                 column: "PedidoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PedidoItems_ProdutoId",
-                table: "PedidoItems",
+                name: "IX_PedidoItens_ProdutoId",
+                table: "PedidoItens",
                 column: "ProdutoId");
 
             migrationBuilder.CreateIndex(
@@ -90,10 +120,16 @@ namespace BTG.Clientes.Infra.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "PedidoItems");
+                name: "PedidoItens");
 
             migrationBuilder.DropTable(
                 name: "Pedidos");
+
+            migrationBuilder.DropTable(
+                name: "Produtos");
+
+            migrationBuilder.DropTable(
+                name: "Clientes");
 
             migrationBuilder.DropSequence(
                 name: "SequenciaCodigoPedido");
