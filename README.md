@@ -37,10 +37,11 @@ Este projeto foi desenvolvido em .NET (backend), Angular (frontend), SQL Server 
     - **/btg-app**  Front-end
 ## Pré-requisitos
 
-- [.NET SDK]([https://dotnet.microsoft.com/download](https://dotnet.microsoft.com/pt-br/download/dotnet/8.0)) (versão 8.0 ou superior)
-- [Node.js]([https://nodejs.org/](https://nodejs.org/pt/download/package-manager)) (versão 18 ou superior)
+- [.NET SDK](https://dotnet.microsoft.com/pt-br/download/dotnet/8.0) (versão 8.0 ou superior)
+- [Node.js](https://nodejs.org/pt/download/package-manager) (versão 18 ou superior)
 - [Angular CLI](https://angular.io/cli)
-- Docker
+- [Docker](https://docs.docker.com/desktop/install/windows-install)
+- [RabbitMq](https://www.rabbitmq.com/docs/download) (recomendado utilizar o docker compose `/docker/docker-compose.yml`)
 
 ## Instalação
 
@@ -79,6 +80,7 @@ Este projeto foi desenvolvido em .NET (backend), Angular (frontend), SQL Server 
 #### Backend
 
 1. Abra a solution `BtgTesteTecnico.sln` com o Visual Studio e configure a opção `Multiple startup projects` igual a imagem abaixo
+
    ![Screenshot_7](https://github.com/user-attachments/assets/b204fb7d-8441-4944-9268-4b5262b41d8a)
 
 2. Execute a aplicação apertando `F5` no Visual Studio
