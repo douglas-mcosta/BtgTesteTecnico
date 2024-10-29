@@ -21,7 +21,7 @@ services:
             ACCEPT_EULA: "Y"     
 
     api-identidade:
-        image: dockerdmcdev/btg-ecommerce-api-identidade:latest
+        image: dockerdmcdev/btg-api-identidade:v1
         container_name: btg-api-identidade    
         restart: always    
         environment: 
@@ -36,7 +36,7 @@ services:
             - sql-server
 
     api-ecommerce:
-        image: dockerdmcdev/btg-ecommerce-api-ecommerce:latest
+        image: dockerdmcdev/btg-api-ecommerce:latest
         container_name: btg-api-ecommerce    
         restart: always    
         environment: 

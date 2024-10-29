@@ -27,7 +27,7 @@ services:
             LANG: en_US.UTF-8
 
     api-identidade:
-        image: douglas/btg-identidade:latest
+        image: douglas/btg-api-identidade:latest
         container_name: btg-api-identidade    
         build: 
             context: ../src
@@ -45,7 +45,7 @@ services:
             - sql-server
 
     api-ecommerce:
-        image: douglas/btg-ecommerce-api-ecommerce:latest
+        image: douglas/btg-api-ecommerce:latest
         container_name: btg-api-ecommerce    
         build: 
             context: ../src
