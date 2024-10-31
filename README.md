@@ -72,8 +72,11 @@ Este projeto foi desenvolvido em .NET (backend), Angular (frontend), SQL Server 
     ```bash
     docker-compose up -d
     ```
+2. Verifique se todos os conteiners forem iniciados
 
-2. Acesse o frontend em `http://localhost` e as APIs em `http://localhost:5000/swagger/index.html`, `http://localhost:5001/swagger/index.html`, `http://localhost:5002/swagger/index.html`
+![image](https://github.com/user-attachments/assets/f95834f6-c817-498a-9477-6994a51ff1ff)
+
+4. Acesse o frontend em `http://localhost` e as APIs em `http://localhost:5000/swagger/index.html`, `http://localhost:5001/swagger/index.html`, `http://localhost:5002/swagger/index.html`
 
 ### Localmente
 
@@ -91,11 +94,32 @@ Este projeto foi desenvolvido em .NET (backend), Angular (frontend), SQL Server 
     ```bash
     cd src/web/btg-app
     ```
+2. Para rodar localmente lembre-se de `**deixar apenas o docker btg-rabbit**` rodando e os outros como stop.
 
-2. Execute o projeto Angular:
+ ![Screenshot_8](https://github.com/user-attachments/assets/f3412241-25b9-45ad-b788-e45550194259)
+
+3. Caso tenha uma instancia do sql na maquina, execute o arquivo `.banco-inicial.sql` localizada na pasta `/sql` desse projeto ou inicie o docker btg-sql-serve
+
+ ![image](https://github.com/user-attachments/assets/916e50fd-d9e4-4ad9-8035-3e3f0af55c3b)
+
+4. Caso tenha optado por usar o btg-sql-serve lembre-se de alterar a connection string dos `appsettings.Development.json` para `Server=bgt-sql-server,1433;Initial Catalog=identidade_db;Persist Security Info=True;User ID=sa;Password=n<8l=8R54I[j;MultipleActiveResultSets=True;Encrypt=False;connect timeout=30`
+
+
+5. Execute o projeto Angular:
     ```bash
     ng s
     ```
 
-3. Acesse o frontend em `http://localhost:4200`.
+6. Acesse o frontend em `http://localhost:4200`.
+### Soluções de problemas
+1. Caso ocorra o erro abaixo, ao adicionar produto ao pedido, verifique novamente o passo 2 em que apenas o `btg-rabbit` deve estar em execução caso esteja rodando o projeto localmente no visual studio.
+
+![image](https://github.com/user-attachments/assets/62a9c358-b733-4d67-b9c7-365b1db28b8a)
+
+Caso tenha seguido o passo 4 o `btg-sql-server` tambem pode estar em execução caso contrario apenas o `btg-rabbit`
+
+![image](https://github.com/user-attachments/assets/76757b29-1874-48c9-9704-7abda493525e)
+
+
+
 
