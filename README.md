@@ -102,8 +102,10 @@ Este projeto foi desenvolvido em .NET (backend), Angular (frontend), SQL Server 
 
  ![image](https://github.com/user-attachments/assets/916e50fd-d9e4-4ad9-8035-3e3f0af55c3b)
 
-4. Caso tenha optado por usar o btg-sql-serve lembre-se de alterar a connection string dos `appsettings.Development.json` para `Server=localhost,1433;Initial Catalog=identidade_db;Persist Security Info=True;User ID=sa;Password=n<8l=8R54I[j;MultipleActiveResultSets=True;Encrypt=False;connect timeout=30`
-
+4. Caso tenha optado por usar o btg-sql-serve lembre-se de alterar a connection string dos `appsettings.Development.json` para:
+  - BTG.Identidade.API =>  `Server=localhost,1433;Initial Catalog=identidade_db;Persist Security Info=True;User ID=sa;Password=n<8l=8R54I[j;MultipleActiveResultSets=True;Encrypt=False;connect timeout=30`
+  - BTG.Ecommerce.API =>  `Server=localhost,1433;Initial Catalog=ecommerce_db;Persist Security Info=True;User ID=sa;Password=n<8l=8R54I[j;MultipleActiveResultSets=True;Encrypt=False;connect timeout=30`
+  - BTG.Relatorio.API =>  `Server=localhost,1433;Initial Catalog=relatorio_db;Persist Security Info=True;User ID=sa;Password=n<8l=8R54I[j;MultipleActiveResultSets=True;Encrypt=False;connect timeout=30`
 
 5. Execute o projeto Angular:
     ```bash
