@@ -5,7 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build-azure": "ng build --configuration=azure",
     "watch": "ng build --watch --configuration development",
+    "build-prod": "ng build --prod",
     "test": "ng test"
   },
   "private": true,

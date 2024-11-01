@@ -12,26 +12,17 @@ services:
                 RABBITMQ_DEFAULT_PASS: "btg@123"
        
     sql-server:
-        image: douglas/bgt-sql-server:latest
+        image: dockerdmcdev/bgt-sql-server:latest
         container_name: bgt-sql-server
-        build: 
-            context: ../sql
-            dockerfile: ./Dockerfile
         ports:
           - "1433:1433"
         environment:
             SA_PASSWORD: "n<8l=8R54I[j"
-            ACCEPT_EULA: "Y"  
-            ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT: false 
-            LC_ALL: en_US.UTF-8   
-            LANG: en_US.UTF-8
+            ACCEPT_EULA: "Y"     
 
     api-identidade:
-        image: douglas/btg-api-identidade:latest
+        image: dockerdmcdev/btg-api-identidade:v1
         container_name: btg-api-identidade    
-        build: 
-            context: ../src
-            dockerfile: ./services/BTG.Identidade/Dockerfile  
         restart: always    
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -45,11 +36,8 @@ services:
             - sql-server
 
     api-ecommerce:
-        image: douglas/btg-api-ecommerce:latest
+        image: dockerdmcdev/btg-api-ecommerce:latest
         container_name: btg-api-ecommerce    
-        build: 
-            context: ../src
-            dockerfile: ./services/BTG.Ecommerce.API/Dockerfile  
         restart: always    
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -64,11 +52,8 @@ services:
             - api-identidade
 
     api-relatorio:
-        image: douglas/btg-api-relatorio:latest
+        image: dockerdmcdev/btg-api-relatorio:latest
         container_name: btg-api-relatorio    
-        build: 
-            context: ../src
-            dockerfile: ./services/BTG.Relatorio.API/Dockerfile  
         restart: always    
         environment: 
             - ASPNETCORE_ENVIRONMENT=Production
@@ -83,11 +68,8 @@ services:
             - api-identidade
 
     web-angular:
-        image: douglas/btg-web-angular:latest
+        image: dockerdmcdev/btg-web-angular-azure:latest
         container_name: btg-web-angular    
-        build: 
-            context: ../src/web/btg-app
-            dockerfile: ./src/Dockerfile  
         restart: always    
         ports:
             - "80:80"

@@ -55,6 +55,27 @@
               ],
               "outputHashing": "all"
             },
+            "azure": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.azure.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -71,6 +92,9 @@
           "configurations": {
             "production": {
               "browserTarget": "btg-app:build:production"
+            },
+            "azure": {
+              "browserTarget": "btg-app:build:azure"
             },
             "development": {
               "browserTarget": "btg-app:build:development"
