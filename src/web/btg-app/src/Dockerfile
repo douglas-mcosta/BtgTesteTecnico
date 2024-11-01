@@ -7,8 +7,8 @@ WORKDIR /app
 COPY package.json /app
 RUN npm install --legacy-peer-deps
 COPY . /app
-RUN $(npm bin)/ng build-azure 
-###RUN npm run build-azure 
+RUN $(npm bin)/ng build --prod 
+###RUN npm run build-azure
 
 
 ### Estágio 2 - Subir o source para o servidor NGINX com a app Angular ###
