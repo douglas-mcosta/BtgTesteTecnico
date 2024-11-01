@@ -3,7 +3,8 @@
 ## Descrição
 
 Este projeto foi desenvolvido em .NET (backend), Angular (frontend), SQL Server e Docker, utilizando arquitetura de **microserviços** e mensageria com **RabbitMQ**, como parte de um teste técnico para um processo de recrutamento e seleção. O projeto visa demonstrar habilidades em desenvolvimento full-stack, além de aplicação de conceitos modernos de arquitetura de software.
-
+## Demo 
+- http://ecommerce-azure.brazilsouth.cloudapp.azure.com (Aplicação hospedada no azure em uma vm com Ubuntu Server 20.04)
 ## Tecnologias Utilizadas
 
 - **Backend**: .NET Core
